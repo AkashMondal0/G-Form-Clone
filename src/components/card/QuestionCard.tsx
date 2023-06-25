@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { Button, Input } from "../../app/material";
 import { HiXMark, HiPlus } from "react-icons/hi2";
-
+import { v4 as uuidv4 } from 'uuid';
 interface option {
     id: string,
     value: string,
@@ -35,9 +35,8 @@ const QuestionCard: React.FC<QuestionFormCardProps> = ({
     const cardId = id
 
     const [optionsList, setOptionsList] = useState<option[]>(options);
-
     const [option, setOption] = useState<option>({
-        id: Math.random().toString(36).substr(2, 9),
+        id: uuidv4(),
         value: ""
     }) // ref 
 
@@ -51,7 +50,7 @@ const QuestionCard: React.FC<QuestionFormCardProps> = ({
         options: optionsList,
         answer: answer,
         required: required,
-        id: Math.random().toString(36).substr(2, 9)
+        id: uuidv4()
     })
 
     // for option
@@ -59,7 +58,7 @@ const QuestionCard: React.FC<QuestionFormCardProps> = ({
     const addQuestion_Option = useCallback(() => {
         setOptionsList([...optionsList, option])
         setOption({
-            id: Math.random().toString(36).substr(2, 9),
+            id: uuidv4(),
             value: ""
         })
     }, [optionsList, option])

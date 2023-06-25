@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import { Button, Input } from "../../app/material";
 import { HiXMark, HiPlus } from "react-icons/hi2";
-
+import { v4 as uuidv4 } from 'uuid';
 interface option {
     id: string,
     value: string,
@@ -26,29 +26,27 @@ interface QuestionFormCardProps {
     updateQuestion: (data: question, id: string) => void,
 }
 
+
+
 const QuestionFormCard: React.FC<QuestionFormCardProps> = ({
     title, options, answer, required, id,
     addQuestion,
 }) => {
-
     const [optionsList, setOptionsList] = useState<option[]>(options);
-
     const [option, setOption] = useState<option>({
-        id: Math.random().toString(36).substr(2, 9),
+        id: uuidv4(),
         value: ""
     }) // ref 
-
     const [optionUpdate, setOptionUpdate] = useState<option>({
         id: '',
         value: ""
     }) // ref
-
     const [question, setQuestion] = useState<question>({
         title: title,
         options: optionsList,
         answer: answer,
         required: required,
-        id: Math.random().toString(36).substr(2, 9)
+        id: uuidv4()
     })
 
     // for option
@@ -56,7 +54,7 @@ const QuestionFormCard: React.FC<QuestionFormCardProps> = ({
     const addQuestion_Option = useCallback(() => {
         setOptionsList([...optionsList, option])
         setOption({
-            id: Math.random().toString(36).substr(2, 9),
+            id: uuidv4(),
             value: ""
         })
     }, [optionsList, option])
@@ -113,10 +111,14 @@ const QuestionFormCard: React.FC<QuestionFormCardProps> = ({
             options: [],
             answer: "",
             required: false,
-            id: Math.random().toString(36).substr(2, 9)
+            id: uuidv4()
         })
         setOptionsList([])
     }, [question, optionsList, addQuestion])
+
+
+
+
 
     return (
         <div>
