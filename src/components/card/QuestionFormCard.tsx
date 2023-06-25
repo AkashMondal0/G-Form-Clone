@@ -2,31 +2,13 @@ import React, { useState, useCallback } from 'react'
 import { Button, Input } from "../../app/material";
 import { HiXMark, HiPlus } from "react-icons/hi2";
 import { v4 as uuidv4 } from 'uuid';
-interface option {
-    id: string,
-    value: string,
-}
+import { option, question } from '@/interfaces/interfaces';
 
-interface question {
-    id: string,
-    title: string,
-    options: option[],
-    answer: string,
-    required: boolean,
-}
-
-interface QuestionFormCardProps {
-    title: string,
-    options: option[],
-    answer: string,
-    required: boolean,
-    id: string,
+interface QuestionFormCardProps extends question {
     addQuestion: (data: question) => void,
     removeQuestion: (id: string) => void,
     updateQuestion: (data: question, id: string) => void,
 }
-
-
 
 const QuestionFormCard: React.FC<QuestionFormCardProps> = ({
     title, options, answer, required, id,

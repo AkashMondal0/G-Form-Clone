@@ -2,25 +2,9 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { Button, Input } from "../../app/material";
 import { HiXMark, HiPlus } from "react-icons/hi2";
 import { v4 as uuidv4 } from 'uuid';
-interface option {
-    id: string,
-    value: string,
-}
+import { option, question } from '@/interfaces/interfaces';
 
-interface question {
-    id: string,
-    title: string,
-    options: option[],
-    answer: string,
-    required: boolean,
-}
-
-interface QuestionFormCardProps {
-    title: string,
-    options: option[],
-    answer: string,
-    required: boolean,
-    id: string,
+interface QuestionFormCardProps extends question {
     index: number,
     removeQuestion: (id: string) => void,
     updateQuestion: (data: question, id: string) => void,
@@ -31,9 +15,7 @@ const QuestionCard: React.FC<QuestionFormCardProps> = ({
     removeQuestion,
     updateQuestion
 }) => {
-
     const cardId = id
-
     const [optionsList, setOptionsList] = useState<option[]>(options);
     const [option, setOption] = useState<option>({
         id: uuidv4(),
@@ -80,7 +62,6 @@ const QuestionCard: React.FC<QuestionFormCardProps> = ({
             id: findOption.id,
             value: findOption.value
         })
-        // console.log(findOption)
     }, [optionsList])
 
     const onInputOutUpdate = useCallback((id: string) => {
@@ -105,7 +86,7 @@ const QuestionCard: React.FC<QuestionFormCardProps> = ({
             answer: question.answer,
             required: question.required
         }
-        updateQuestion(question, cardId)
+        updateQuestion(data, cardId)
     }, [optionsList, question, optionUpdate, cardId, updateQuestion])
 
 

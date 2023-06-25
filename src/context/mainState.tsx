@@ -2,35 +2,10 @@ import React, { useCallback, useReducer, useState } from 'react'
 import MainContext from './mainContext'
 import { MainReducer, initialState } from './mainReducer'
 import { v4 as uuidv4 } from 'uuid';
+import { FormPage, question } from '@/interfaces/interfaces';
 
 interface MainStateProps {
     children: React.ReactNode
-}
-interface option {
-    id: string,
-    value: string,
-}
-interface question {
-    id: string,
-    title: string,
-    options: option[],
-    answer: string,
-    required: boolean,
-}
-interface Author {
-    name: string,
-    email: string,
-    password: string,
-    date: Date
-    forms: question
-}
-
-interface FormPage {
-    id: string,
-    userName: string,
-    userId: string,
-    date: Date,
-    questions: question[]
 }
 
 const getLocal = () => {
@@ -82,8 +57,8 @@ const MainState: React.FC<MainStateProps> = ({
     const handleSubmit = useCallback(() => {
         const newForm: FormPage = {
             id: uuidv4(),
-            userName: 'akash olivia',
-            userId: 'fwofwefiohwiofh',
+            userName: 'test',
+            userId: 'test11q',
             date: new Date(),
             questions: QuestionList
         }

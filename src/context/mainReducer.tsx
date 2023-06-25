@@ -1,65 +1,7 @@
 // Date: 04/08/21
-interface option {
-    id: string,
-    value: string,
-}
+import { MainState, action } from "@/interfaces/interfaces"
 
-interface question {
-    id: string,
-    title: string,
-    options: option[],
-    answer: string,
-    required: boolean,
-}
-
-interface FormPage {
-    userName: string,
-    userId: string,
-    date: Date,
-    questions: question[]
-}
-
-interface action {
-    type: string,
-    payload: FormPage[]
-}
-
-interface option {
-    id: string,
-    value: string,
-}
-interface question {
-    id: string,
-    title: string,
-    options: option[],
-    answer: string,
-    required: boolean,
-}
-interface Author {
-    name: string,
-    email: string,
-    password: string,
-    date: Date
-    forms: question
-}
-
-interface FormPage {
-    userName: string,
-    userId: string,
-    date: Date,
-    questions: question[]
-}
-interface MainStateInterface {
-    Author: Author | null,
-    token: string | null,
-    data: FormPage[] | Array<any>,
-    isLogged: boolean,
-    loading: boolean,
-    status: number | null,
-    error: boolean,
-
-}
-export const initialState: MainStateInterface = {
+export const initialState: MainState = {
     Author: null,
     token: null,
     data: [],

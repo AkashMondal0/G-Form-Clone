@@ -5,21 +5,10 @@ import QuestionFormCard from '../card/QuestionFormCard';
 import { Button } from '@/app/material';
 import MainContext from '@/context/mainContext';
 import TitleBlock from './TitleBlock';
+import { option, question } from '@/interfaces/interfaces';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-interface option {
-    id: string,
-    value: string,
-}
-
-interface question {
-    id: string,
-    title: string,
-    options: option[],
-    answer: string,
-    required: boolean,
-    removeQuestion?: (id: string) => void,
-    updateQuestion?: (data: question, id: string) => void,
-}
 
 enum STEPS {
     Question = 0,
@@ -27,6 +16,7 @@ enum STEPS {
 }
 
 const AdminPage = () => {
+     const router = useRouter()
     const MainState: any = useContext(MainContext)
     const [step, setStep] = useState<STEPS>(STEPS.Question)
     // for step
@@ -45,6 +35,7 @@ const AdminPage = () => {
                 review
                 <Button onClick={onBack}>Back</Button>
                 <Button onClick={() => {
+                    router.push('/')
                     localStorage.setItem('data', JSON.stringify(MainState.state))
                 }}>save data</Button>
             </div>)
