@@ -1,16 +1,19 @@
 'use client'
-import React from 'react'
-import MainState from '@/context/mainState'
-import HomePage from '@/components/home/page'
+import { useRouter } from 'next/navigation'
+import React, { useEffect } from 'react'
+
 
 function Home() {
+  const router = useRouter()
+
+  useEffect(() => {
+    router.push('/forms/')
+  }, [router])
 
   return (
-    <>
-      <MainState>
-        <HomePage />
-      </MainState>
-    </>
+    <React.Fragment>
+      Home -- Login
+    </React.Fragment>
   )
 }
 

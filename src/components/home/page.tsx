@@ -3,28 +3,43 @@ import { useRouter } from 'next/navigation'
 import MainContext from '@/context/mainContext'
 import Navbar from '../navbar/Navbar'
 import { v4 as uuidv4 } from 'uuid';
+import PlusForm from './plusForm';
+import { FormPage, MainContextInterface } from '@/interfaces/interfaces';
+
+import dynamic from 'next/dynamic'
+import CardLoading from './CardLoading';
+ 
+const FormCard = dynamic(() => import('./FormCard'), {
+  loading: () => <CardLoading />,
+    ssr: false
+});
+
 const HomePage = () => {
-    const MainState = useContext(MainContext)
+
+    const MainState: any = useContext(MainContext)
     const router = useRouter()
+
     const HandleAdd = () => {
         const id = uuidv4()
-        router.push(`/uploadForm=${id}`)
+        router.push(`/forms/${id}`)
     }
 
 
+
     return (
-        <div>
+        <React.Fragment>
             <Navbar title='Forms navbar' />
-            <div className="container bg-neutral-300 w-full h-full">
-                <div className="row">
-                    <div className="col-12">
-                        <div className="h-20 w-20 border" onClick={HandleAdd}>
-                            add
-                        </div>
-                    </div>
-                </div>
+            <div className='w-full justify-center
+            items-center
+            flex flex-wrap
+            gap-4
+            '>
+                <div onClick={HandleAdd}><PlusForm /></div>
+                {MainState.state.data?.map((item: FormPage, index: number) => {
+                    return <FormCard key={index} id={item.id} title={item.title} />
+                })}
             </div>
-        </div>
+        </React.Fragment>
     )
 }
 

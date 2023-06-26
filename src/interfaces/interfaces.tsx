@@ -1,15 +1,12 @@
-export interface MainStateProps {
-    children: React.ReactNode
-}
+
 export interface option {
     id: string,
     value: string,
 }
 export interface question {
     id: string,
-    title: string,
     options: option[],
-    answer: string,
+    answer: option,
     required: boolean,
 }
 export interface FormPage {
@@ -17,6 +14,8 @@ export interface FormPage {
     userName: string,
     userId: string,
     date: Date,
+    title: string,
+    description: string,
     questions: question[]
 }
 export interface Author {
@@ -39,4 +38,10 @@ export interface MainState {
 export interface action {
     type: string,
     payload: FormPage[]
+}
+
+export interface MainContextInterface {
+    state: MainState,
+    dispatch: React.Dispatch<action>,
+    handleSubmit: () => void,
 }

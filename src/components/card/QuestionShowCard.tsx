@@ -1,46 +1,38 @@
-import React, { useState, useCallback } from 'react'
-import {
-    Button, Input, Switch,
-    Radio,
-    Card,
-    List,
-    ListItem,
-    ListItemPrefix,
-    Typography
-} from "../../app/material";
+import React, { useState, useCallback, useEffect } from 'react'
+import { Button, Card, Input, ListItemPrefix, Radio, Switch, Typography } from "../../app/material";
 import { HiXMark, HiPlus } from "react-icons/hi2";
 import { v4 as uuidv4 } from 'uuid';
 import { option, question } from '@/interfaces/interfaces';
 
-interface QuestionFormCardProps {
-    addQuestion: (data: question) => void,
+interface QuestionFormCardProps extends question {
+    index: number,
     removeQuestion: (id: string) => void,
     updateQuestion: (data: question, id: string) => void,
 }
 
-const QuestionFormCard: React.FC<QuestionFormCardProps> = ({
-    // title, options, answer, required, id,
-    addQuestion,
+const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
+    title, options, answer, required, id, index,
+    removeQuestion,
+    updateQuestion
 }) => {
-    // set form data
-    const [optionsList, setOptionsList] = useState<option[]>([]);
+    const cardId = id
+    const [optionsList, setOptionsList] = useState<option[]>(options);
     const [option, setOption] = useState<option>({
         id: uuidv4(),
         value: ""
     }) // ref 
+
     const [optionUpdate, setOptionUpdate] = useState<option>({
         id: '',
         value: ""
     }) // ref
+
     const [question, setQuestion] = useState<question>({
-        title: "",
+        title: title,
         options: optionsList,
-        answer: {
-            id: "",
-            value: ""
-        },
-        required: false,
-        id: uuidv4() // id get from url
+        answer: answer,
+        required: required,
+        id: id
     })
 
     // for option
@@ -87,77 +79,50 @@ const QuestionFormCard: React.FC<QuestionFormCardProps> = ({
             ...question,
             options: newData
         })
-    }, [optionsList, question, optionUpdate])
-
-    // for question update
-
-    const handleSubmit = useCallback(() => {
         const data: question = {
             id: question.id,
             title: question.title,
-            options: optionsList,
+            options: newData,
             answer: question.answer,
             required: question.required
         }
-        addQuestion(data)
-        // console.log(data)
-        setQuestion({
-            title: "",
-            options: [],
-            answer: {
-                id: "",
-                value: ""
-            },
-            required: false,
-            id: uuidv4()
-        })
-        setOptionsList([])
-    }, [question, optionsList, addQuestion])
-
-
+        updateQuestion(data, cardId)
+    }, [optionsList, question, optionUpdate, cardId, updateQuestion])
+    
     return (
         <Card>
-            <div className='p-5'>
-                <div className='title'>
-                    <div className='h-1 w-full flex justify-end'>
-                        {question.required && <span className="text-red-500 mr-1 text-2xl text-end">*</span>}
-                    </div>
-                    <div className='my-2 flex gap-4'>
-                        {/* <h1 className='my-4 text-lg font-semibold'>{0})</h1> */}
-                        <Input
-                            multiple
-                            onChange={(e) => {
-                                setQuestion({
-                                    ...question,
-                                    title: e.target.value
-                                })
-                            }}
-                            value={question.title}
-                            variant="standard" label="Untitled Question" />
-                    </div>
+            <div className='p-6'>
+                <div className='h-2 w-full flex justify-end'>
+                    {question.required && <span className="text-red-500 mr-1 text-2xl text-end">*</span>}
                 </div>
-                {/* /// array data// */}
+                <div className='my-10 flex gap-4'>
+                    <h1 className='my-4 text-lg font-semibold'>{index + 1})</h1>
+                    <Input
+                        multiple
+                        onChange={(e) => {
+                            setQuestion({
+                                ...question,
+                                title: e.target.value
+                            })
+                        }}
+                        value={question.title}
+                        variant="standard" label="Untitled Question" />
+                </div>
+
                 {optionsList.map((item, index) => {
                     return (
                         <div className="flex items-center my-4" key={index}>
-                            <label htmlFor={question.id} className="px-3 py-2 flex items-center w-full cursor-pointer">
+                            <label htmlFor={item.id} className="px-3 py-2 flex items-center w-full cursor-pointer">
                                 <ListItemPrefix className="mr-3">
                                     <Radio
+                                    defaultChecked={answer.id === item.id}
+                                        // checked={answer.id === item.id || false} // TODO: fix this
                                         name={question.id}
                                         id={item.id}
                                         ripple={true}
                                         className="hover:before:opacity-0"
                                         containerProps={{
                                             className: "p-0"
-                                        }}
-                                        onClick={() => {
-                                            setQuestion({
-                                                ...question,
-                                                answer: {
-                                                    id: item.id,
-                                                    value: item.value
-                                                }
-                                            })
                                         }}
                                     />
                                 </ListItemPrefix>
@@ -183,12 +148,15 @@ const QuestionFormCard: React.FC<QuestionFormCardProps> = ({
                         </div>
                     )
                 })}
+
                 {/* ///// */}
-                <div className='flex items-center my-6'>
+                <div className="flex items-center my-6" >
                     <label htmlFor="vertical-list-svelte" className="px-3 py-2 flex items-center w-full cursor-pointer">
                         <ListItemPrefix className="mr-3">
                             <Radio
                                 disabled
+                                name="vertical-list"
+                                id="vertical-list-svelte"
                                 ripple={true}
                                 className="hover:before:opacity-0"
                                 containerProps={{
@@ -213,7 +181,6 @@ const QuestionFormCard: React.FC<QuestionFormCardProps> = ({
                         </div>
                     </label>
                 </div>
-
                 <div className='flex justify-between'>
                     <div>
                         <Typography variant='h6' className='text-gray-500'>Required</Typography>
@@ -227,7 +194,7 @@ const QuestionFormCard: React.FC<QuestionFormCardProps> = ({
                                 })
                             }} />
                     </div>
-                    <Button color='green' onClick={handleSubmit}>add Question</Button>
+                    <Button color='green' onClick={() => { }}>Update</Button>
                 </div>
             </div>
         </Card>
@@ -235,4 +202,4 @@ const QuestionFormCard: React.FC<QuestionFormCardProps> = ({
 
 }
 
-export default QuestionFormCard
+export default QuestionShowCard
