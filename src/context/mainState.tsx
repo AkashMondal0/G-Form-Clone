@@ -5,7 +5,7 @@ import { FormPage } from '@/interfaces/interfaces'
 const getLocal = () => {
     if (typeof window !== "undefined") {
         const Local = localStorage.getItem('GoForm')
-        return localStorage.getItem('GoForm') ? JSON.parse(Local!) : [];
+        return localStorage.getItem('GoForm') ? JSON.parse(Local!) : false;
     }
 }
 
@@ -27,12 +27,21 @@ const MainState: React.FC<MainStateProps> = ({
         })
     }, [state])
 
+    const FormSaveLocal = useCallback(() => {
+        // console.log(state)
+        localStorage.setItem('GoForm', JSON.stringify(state))
+    }, [state])
+
+
     useEffect(() => {
         if (typeof window !== "undefined") {
-            dispatch({
-                type: 'START',
-                payload: getLocal()
-            })
+            const localData = getLocal()
+            if (localData) {
+                dispatch({
+                    type: 'START',
+                    payload: getLocal()
+                })
+            }
         }
     }, [])
 
@@ -41,6 +50,7 @@ const MainState: React.FC<MainStateProps> = ({
             state,
             dispatch,
             FormSubmit,
+            FormSaveLocal
         }}>
             {children}
         </MainContext.Provider>

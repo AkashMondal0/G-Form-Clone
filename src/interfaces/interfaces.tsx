@@ -4,6 +4,7 @@ export interface option {
     value: string,
 }
 export interface question {
+    title: string,
     id: string,
     options: option[],
     answer: option,
@@ -17,6 +18,16 @@ export interface FormPage {
     title: string,
     description: string,
     questions: question[]
+}
+
+export enum FormDummy {
+    id = "",
+    userName = "",
+    userId = "",
+    date = new Date() as any,
+    title = "",
+    description = "",
+    questions = [] as any,
 }
 export interface Author {
     name: string,

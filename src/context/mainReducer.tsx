@@ -1,12 +1,6 @@
 // Date: 04/08/21
 import { MainState, action } from "@/interfaces/interfaces"
 
-const getLocal = () => {
-    if (typeof window !== "undefined") {
-        const Local = localStorage.getItem('GoForm')
-        return localStorage.getItem('GoForm') ? JSON.parse(Local!) : [];
-    }
-}
 
 export const initialState: MainState = {
     Author: null,

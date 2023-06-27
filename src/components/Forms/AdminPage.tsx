@@ -7,25 +7,23 @@ import MainContext from '@/context/mainContext';
 import TitleBlock from './TitleBlock';
 import { FormPage, question } from '@/interfaces/interfaces';
 import ReviewPage from './ReviewPage';
-
-
+import { v4 as uuidv4 } from 'uuid';
 
 enum STEPS {
     Question = 0,
     Review = 1,
 }
 interface AdminPageProps {
-    formId: string
 }
 
-const AdminPage: React.FC<AdminPageProps> = ({ formId }) => {
+const AdminPage: React.FC<AdminPageProps> = ({ }) => {
     const MainState: any = useContext(MainContext)
     const [step, setStep] = useState<STEPS>(STEPS.Question)
     const [QuestionList, setQuestionList] = useState<question[]>([])
     const [Form, setForm] = useState<FormPage>({
         title: '',
         description: '',
-        id: formId, // get path is id
+        id: uuidv4(), // get path is id
         userName: 'Akash',
         userId: 'Akash',
         date: new Date(),
@@ -34,6 +32,7 @@ const AdminPage: React.FC<AdminPageProps> = ({ formId }) => {
 
     const addQuestion = useCallback((data: question) => {
         setQuestionList([...QuestionList, {
+            title: data.title,
             id: data.id,
             options: data.options,
             answer: data.answer,
@@ -51,6 +50,7 @@ const AdminPage: React.FC<AdminPageProps> = ({ formId }) => {
         const newData = QuestionList.map((item) => {
             if (item.id === data.id) {
                 return {
+                    title: data.title,
                     id: data.id,
                     options: data.options,
                     answer: data.answer,
@@ -78,11 +78,16 @@ const AdminPage: React.FC<AdminPageProps> = ({ formId }) => {
             questions: QuestionList
         }
         MainState.FormSubmit(newForm)
+        setForm(newForm)
         onNext()
     }
 
     if (step === STEPS.Review) {
-        return <ReviewPage onBack={onBack} data={MainState}/>
+        return <ReviewPage
+        onSubmit={MainState.FormSaveLocal}
+            onBack={onBack}
+            data={MainState}
+            Form={Form} />
     }
 
     if (step === STEPS.Question) {
@@ -94,6 +99,7 @@ const AdminPage: React.FC<AdminPageProps> = ({ formId }) => {
                     return (
                         <div className='my-5' key={index}>
                             <QuestionCard
+                                title={item.title}
                                 index={index}
                                 options={item.options}
                                 answer={item.answer}

@@ -10,9 +10,16 @@ interface FormCardProps {
     title: string
 }
 
-const FormCard: React.FC<FormCardProps> = ({ }) => {
+const FormCard: React.FC<FormCardProps> = ({
+    id,
+    userName,
+    userId,
+    date,
+    questions,
+    title
+}) => {
     return (
-        <div className='m-4'>
+        <div className='m-4 cursor-pointer'>
             <Card
                 shadow={true}
                 className="relative 
@@ -35,10 +42,10 @@ const FormCard: React.FC<FormCardProps> = ({ }) => {
                         color="white"
                         className="mb-6 font-medium leading-[1.5]"
                     >
-                       Title - Projects Akash  
+                       {title} 
                     </Typography>
                     <Typography variant="h6" className="mb-4 text-gray-400">
-                        Account Name
+                       {userName}
                     </Typography>
                     <Avatar
                         size={`lg`}

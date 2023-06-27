@@ -1,30 +1,41 @@
 import { Button } from '@/app/material'
-import { MainContextInterface } from '@/interfaces/interfaces'
+import { FormPage, MainContextInterface } from '@/interfaces/interfaces'
 import { useRouter } from 'next/navigation'
 import React from 'react'
+import ViewForm from '../viewForm/ViewForm'
 
 
 interface ReviewPageProps {
     data: MainContextInterface
     onBack?: () => void
     onDone?: () => void
+    Form: FormPage
+    onSubmit: () => void
 }
 
-const ReviewPage: React.FC<ReviewPageProps> = ({ data,
+const ReviewPage: React.FC<ReviewPageProps> = ({
+    data,
     onBack,
-    onDone
+    onDone,
+    Form,
+    onSubmit
 }) => {
     const router = useRouter()
+    console.log(Form)
     return (
-        <div>
-            <h1>Review Page</h1>
-            <Button onClick={onBack}>Back</Button>
-            <h1>data save</h1>
-            <Button onClick={() => {
-                router.push('/forms/')
-                localStorage.setItem('GoForm', JSON.stringify(data.state))
-            }}>save data</Button>
-        </div>
+        <React.Fragment>
+            <div className='w-full'>
+                <ViewForm form={Form} ShowAnswer={true} />
+                <div className={`w-full flex justify-between p-8`} >
+                    <Button color='red' onClick={onBack}>Back</Button>
+                    <Button color='blue' onClick={() => {
+                        onSubmit()
+                        router.push('/forms')
+                        // post data to server
+                    }}>Submit</Button>
+                </div>
+            </div>
+        </React.Fragment>
     )
 }
 

@@ -8,9 +8,9 @@ import { FormPage, MainContextInterface } from '@/interfaces/interfaces';
 
 import dynamic from 'next/dynamic'
 import CardLoading from './CardLoading';
- 
+
 const FormCard = dynamic(() => import('./FormCard'), {
-  loading: () => <CardLoading />,
+    loading: () => <CardLoading />,
     ssr: false
 });
 
@@ -21,6 +21,10 @@ const HomePage = () => {
 
     const HandleAdd = () => {
         const id = uuidv4()
+        router.push(`/forms/addForm/`)
+    }
+
+    const HandleEdit = (id: string) => {
         router.push(`/forms/${id}`)
     }
 
@@ -36,7 +40,8 @@ const HomePage = () => {
             '>
                 <div onClick={HandleAdd}><PlusForm /></div>
                 {MainState.state.data?.map((item: FormPage, index: number) => {
-                    return <FormCard key={index} id={item.id} title={item.title} />
+                    return <div key={item.id} onClick={() => { HandleEdit(item.id) }}>
+                        <FormCard id={item.id} title={item.title} /></div>
                 })}
             </div>
         </React.Fragment>
