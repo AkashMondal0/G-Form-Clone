@@ -7,6 +7,7 @@ import Responses from '@/components/Tab/Responses'
 import Setting from '@/components/Tab/Setting'
 import EditPage from '@/components/Forms/EditPage'
 import Navbar from '@/components/navbar/Navbar'
+import MainState from '@/context/mainState'
 
 
 const FormDetails: React.FC = ({ params }: any) => {
@@ -16,7 +17,7 @@ const FormDetails: React.FC = ({ params }: any) => {
     {
       label: "Question",
       value: "Question",
-      Body: <EditPage/>,
+      Body: <EditPage />,
     },
     {
       label: "Responses",
@@ -44,8 +45,11 @@ const FormDetails: React.FC = ({ params }: any) => {
 
   return (
     <Fragment>
-      <Navbar title={form.title} />
-      <TabCom FormData={FormTabs} />
+      <MainState>
+        {/* <Navbar title={form.title||""} /> */}
+        <TabCom FormData={FormTabs} />
+      </MainState>
+
     </Fragment>
   )
 }

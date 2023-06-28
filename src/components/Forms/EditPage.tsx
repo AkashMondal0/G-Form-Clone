@@ -6,7 +6,7 @@ import { Button } from '@/app/material';
 import MainContext from '@/context/mainContext';
 import TitleBlock from './TitleBlock';
 import { FormPage, FormType, question } from '@/interfaces/interfaces';
-import ReviewPage from './ReviewPage';
+
 
 const EditPage: React.FC = ({ }) => {
     const MainState: any = useContext(MainContext)
@@ -52,11 +52,11 @@ const EditPage: React.FC = ({ }) => {
             questions: QuestionList
         }
         // update function 
-        console.log(newForm)
+        // console.log(newForm)
+        MainState.FormSubmit(newForm)
     }
-
     return (
-        <>
+        <div className='w-max-[500px] mx-auto'>
             <TitleBlock Value={Form} onChangeValue={setForm} />
             {/* show array questions */}
             {QuestionList.map((item: question, index: number) => {
@@ -86,7 +86,7 @@ const EditPage: React.FC = ({ }) => {
             <div className='my-4'>
                 <Button onClick={handleSubmit}>Submit</Button>
             </div>
-        </>
+        </div>
     )
 }
 

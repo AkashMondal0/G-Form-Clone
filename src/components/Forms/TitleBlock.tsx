@@ -32,7 +32,7 @@ const TitleBlock: React.FC<TitleBlockProps> = ({ Value, onChangeValue }) => {
                 <input
                     onChange={(e) => setDescription(e.target.value)}
                     onBlur={setInput}
-                    id="Title" type="text" placeholder="Title" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                    id="Title" type="text" placeholder="Description" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
             </div>
         </div>
     )

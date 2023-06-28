@@ -126,7 +126,7 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
                                         }}
                                     />
                                 </ListItemPrefix>
-                                <div className="flex flex-col w-60 mx-2">
+                                <div className="flex flex-col w-80 mx-2">
                                     <Input
                                         multiple
                                         onFocus={() => { onInputIn(item.id) }}
@@ -164,7 +164,7 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
                                 }}
                             />
                         </ListItemPrefix>
-                        <div className="flex flex-col w-60 mx-2">
+                        <div className="flex flex-col w-80 mx-2">
                             <Input
                                 multiple
                                 onChange={(e) => {
