@@ -22,22 +22,18 @@ const MainState: React.FC<MainStateProps> = ({
     const [forms, setForms] = useState<FormPage[]>([])
 
     const FormSubmit = useCallback((newForm: FormPage) => {
-        const forms = getLocal().data
-        const replace = forms.find((form: FormPage) => form.id === newForm.id)
-        console.log(replace)
-        // console.log(newForm)
+        const data = [...state.data, newForm]
+        dispatch({
+            type: 'SUBMIT_UPLOAD_FORM',
+            payload: data
+        })
+    }, [state.data])
 
-        // const stateData = [...state.data, newForm]
-        // console.log(newForm)
-        // console.log(findAndUpdate)
-        // const data = [...state.data, newForm]
-        // dispatch({
-        //     type: 'SUBMIT_UPLOAD_FORM',
-        //     payload: data
-        // })
-    }, [forms])
+    const updateForm = useCallback((newForm: FormPage) => {
+        const find = state.data.findIndex((item:FormPage) => item.id === newForm.id)
+        console.log(find)
+    }, [state.data])
 
-    // console.log(forms)
     useEffect(() => {
         if (typeof window !== "undefined") {
             const localData = getLocal()
@@ -58,6 +54,7 @@ const MainState: React.FC<MainStateProps> = ({
             state,
             dispatch,
             FormSubmit,
+            updateForm,
         }}>
             {children}
         </MainContext.Provider>

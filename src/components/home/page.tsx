@@ -19,15 +19,19 @@ const HomePage = () => {
     const router = useRouter()
 
     const HandleAdd = () => {
-        const GenerateId = uuidv4()
+        const GenerateId = FormType.id
+        const User = {
+            userName: "Akash",
+            userId: "92188918291",
+        }
         const CreateForm = {
             id: GenerateId, // get path is id
-            userName: "null",
-            userId: "null",
+            userName: User.userName,
+            userId: User.userId,
             date: new Date(),
             title: "Untitled Form",
             description: "Add Description",
-            questions: [],
+            questions: FormType.questions,
         }
         MainState.FormSubmit(CreateForm)
         router.push(`/forms/edit/${GenerateId}`)

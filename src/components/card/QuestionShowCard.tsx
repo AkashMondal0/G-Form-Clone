@@ -8,12 +8,14 @@ interface QuestionFormCardProps extends question {
     index: number,
     removeQuestion: (id: string) => void,
     updateQuestion: (data: question, id: string) => void,
+    // addQuestion: (data: question) => void,
 }
 
 const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
     title, options, answer, required, id, index,
     removeQuestion,
-    updateQuestion
+    updateQuestion,
+    // addQuestion
 }) => {
     const cardId = id
     const [optionsList, setOptionsList] = useState<option[]>(options);
@@ -88,7 +90,7 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
         }
         updateQuestion(data, cardId)
     }, [optionsList, question, optionUpdate, cardId, updateQuestion])
-    
+
     return (
         <Card>
             <div className='p-6'>
@@ -115,7 +117,7 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
                             <label htmlFor={item.id} className="px-3 py-2 flex items-center w-full cursor-pointer">
                                 <ListItemPrefix className="mr-3">
                                     <Radio
-                                    defaultChecked={answer.id === item.id}
+                                        defaultChecked={answer.id === item.id}
                                         // checked={answer.id === item.id || false} // TODO: fix this
                                         name={question.id}
                                         id={item.id}
@@ -174,7 +176,7 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
                                     })
                                 }}
                                 value={option.value}
-                                variant="standard" label={`Option ${optionsList.length + 1}`} />
+                                variant="standard" label={`Add Option ${optionsList.length + 1}`} />
                         </div>
                         <div className='cursor-pointer'>
                             <HiPlus onClick={addQuestion_Option} size={30} />

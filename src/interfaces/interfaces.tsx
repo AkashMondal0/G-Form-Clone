@@ -21,13 +21,29 @@ export interface FormPage {
 }
 
 export const FormType = {
-    id: uuidv4(),
+    id: uuidv4(), // get path is id
     userName: "null",
     userId: "null",
-    date: new Date() as any,
+    date: new Date() ,
     title: "Untitled Form",
     description: "Add Description",
-    questions: [] as any,
+    questions: [
+        {
+            title: "Untitled Question",
+            id: uuidv4(),
+            options: [
+                {
+                    id: uuidv4(),
+                    value: "Option 1"
+                },
+            ],
+            answer: {
+                id: uuidv4(),
+                value: "Option 1"
+            },
+            required: false,
+        },
+    ],
 }
 export interface Author {
     name: string,
@@ -57,7 +73,7 @@ export interface MainContextInterface {
     handleSubmit: () => void,
 }
 
-export interface TabProps{
+export interface TabProps {
     label: string,
     value: string,
     Body: React.ReactElement

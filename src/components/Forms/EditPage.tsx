@@ -1,5 +1,5 @@
 'use client';
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import QuestionCard from '../card/QuestionShowCard';
 import QuestionFormCard from '../card/QuestionFormCard';
 import { Button } from '@/app/material';
@@ -7,20 +7,27 @@ import MainContext from '@/context/mainContext';
 import TitleBlock from './TitleBlock';
 import { FormPage, FormType, question } from '@/interfaces/interfaces';
 
-
-const EditPage: React.FC = ({ }) => {
+interface EditPage {
+    Form: FormPage
+}
+const EditPage: React.FC<EditPage> = ({
+    Form
+}) => {
     const MainState: any = useContext(MainContext)
     const [QuestionList, setQuestionList] = useState<question[]>([])
-    const [Form, setForm] = useState<FormPage>(FormType)
+    const [form, setForm] = useState<FormPage>({
+        ...FormType,
+        id: Form.id,
+        title: Form.title,
+        description: Form.description,
+        questions: QuestionList
+    })
 
-    const addQuestion = useCallback((data: question) => {
-        setQuestionList([...QuestionList, {
-            title: data.title,
-            id: data.id,
-            options: data.options,
-            answer: data.answer,
-            required: data.required
-        }])
+
+
+    const addQuestion = useCallback(() => {
+
+        setQuestionList([...QuestionList, FormType.questions[0]])
     }, [QuestionList])
 
     const removeQuestion = useCallback((id: string) => {
@@ -45,19 +52,34 @@ const EditPage: React.FC = ({ }) => {
         })
         setQuestionList(newData)
     }, [QuestionList])
+
     // for question save 
     const handleSubmit = () => {
         const newForm = {
             ...Form,
             questions: QuestionList
         }
-        // update function 
-        // console.log(newForm)
-        MainState.FormSubmit(newForm)
+        MainState.updateForm(newForm)
     }
+
+    useEffect(() => {
+        setQuestionList(Form.questions)
+        setForm({
+            ...FormType,
+            id: Form.id,
+            title: Form.title,
+            description: Form.description,
+            questions: Form.questions,
+            userId: Form.userId,
+            userName: Form.userName,
+        })
+    }, [Form])
+
+    // console.log(form)
+
     return (
         <div className='w-max-[500px] mx-auto'>
-            <TitleBlock Value={Form} onChangeValue={setForm} />
+            <TitleBlock Value={form} onChangeValue={setForm} />
             {/* show array questions */}
             {QuestionList.map((item: question, index: number) => {
                 return (
@@ -74,15 +96,16 @@ const EditPage: React.FC = ({ }) => {
                     </div>
                 )
             })}
-
             <div className='my-4'>
+                <Button onClick={addQuestion}>Add Question</Button>
+            </div>
+            {/* <div className='my-4'>
                 <QuestionFormCard
                     addQuestion={addQuestion}
                     removeQuestion={removeQuestion}
                     updateQuestion={updateQuestion}
                 />
-            </div>
-
+            </div> */}
             <div className='my-4'>
                 <Button onClick={handleSubmit}>Submit</Button>
             </div>

@@ -11,13 +11,13 @@ import MainState from '@/context/mainState'
 
 
 const FormDetails: React.FC = ({ params }: any) => {
-  const [form, setForm] = useState<FormPage>(FormType)
+  const [form, setForm] = useState<FormPage>({...FormType, id: params.id})
 
   const FormTabs: TabProps[] = [
     {
       label: "Question",
       value: "Question",
-      Body: <EditPage />,
+      Body: <EditPage Form={form}/>,
     },
     {
       label: "Responses",
@@ -42,11 +42,11 @@ const FormDetails: React.FC = ({ params }: any) => {
     findForm()
   }, [])
 
-
+//  console.log(form)
   return (
     <Fragment>
       <MainState>
-        {/* <Navbar title={form.title||""} /> */}
+        <Navbar title={form.title||""} />
         <TabCom FormData={FormTabs} />
       </MainState>
 
