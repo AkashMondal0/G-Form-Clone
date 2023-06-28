@@ -14,11 +14,10 @@ const TitleBlock: React.FC<TitleBlockProps> = ({ Value, onChangeValue }) => {
             title: Title,
             description: Description,
         })
-        // console.log(Title)
     }
     return (
         <div>
-            <div className="mb-4 w-96">
+            <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                     Form Title
                 </label>
@@ -26,7 +25,7 @@ const TitleBlock: React.FC<TitleBlockProps> = ({ Value, onChangeValue }) => {
                     onChange={(e) => setTitle(e.target.value)}
                     id="Title" type="text" placeholder="Title" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
             </div>
-            <div className="mb-4 w-96">
+            <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                     Description
                 </label>

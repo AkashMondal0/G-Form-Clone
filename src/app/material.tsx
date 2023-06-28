@@ -15,6 +15,11 @@ import {
     CardHeader,
     CardBody,
     Avatar,
+    Tabs,
+    TabsHeader,
+    TabsBody,
+    Tab,
+    TabPanel,
 } from "@material-tailwind/react";
 
 export {
@@ -32,4 +37,9 @@ export {
     CardBody,
     Avatar,
     Typography,
+    Tabs,
+    TabsHeader,
+    TabsBody,
+    Tab,
+    TabPanel,
 };

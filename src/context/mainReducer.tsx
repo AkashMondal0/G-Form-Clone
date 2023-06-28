@@ -19,10 +19,12 @@ export const MainReducer = (state: any, action: action) => {
                 ...state,
             }
         case 'SUBMIT_UPLOAD_FORM':
-            return {
+             const newData = {
                 ...state,
                 data: action.payload,
             }
+            localStorage.setItem('GoForm', JSON.stringify(newData))
+            return newData
         case 'LOGIN':
             return state = action.payload
         case 'LOGOUT':

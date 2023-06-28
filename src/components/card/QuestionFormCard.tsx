@@ -117,7 +117,7 @@ const QuestionFormCard: React.FC<QuestionFormCardProps> = ({
 
     return (
         <Card>
-            <div className='p-5'>
+            <div className='p-8'>
                 <div className='title'>
                     <div className='h-1 w-full flex justify-end'>
                         {question.required && <span className="text-red-500 mr-1 text-2xl text-end">*</span>}
@@ -161,7 +161,7 @@ const QuestionFormCard: React.FC<QuestionFormCardProps> = ({
                                         }}
                                     />
                                 </ListItemPrefix>
-                                <div className="flex flex-col w-60 mx-2">
+                                <div className="flex flex-col w-80 mx-2">
                                     <Input
                                         multiple
                                         onFocus={() => { onInputIn(item.id) }}
@@ -196,7 +196,7 @@ const QuestionFormCard: React.FC<QuestionFormCardProps> = ({
                                 }}
                             />
                         </ListItemPrefix>
-                        <div className="flex flex-col w-60 mx-2">
+                        <div className="flex flex-col w-80 mx-2">
                             <Input
                                 multiple
                                 onChange={(e) => {

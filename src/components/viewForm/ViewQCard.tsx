@@ -6,8 +6,8 @@ import React from 'react'
 interface ViewQCardProps {
     question: question
     ShowAnswer: boolean
-
 }
+
 const ViewQCard: React.FC<ViewQCardProps> = ({
     question,
     ShowAnswer
@@ -39,8 +39,8 @@ const ViewQCard: React.FC<ViewQCardProps> = ({
                                                 className: "p-0"
                                             }}
                                             color='green'
-                                            checked={ShowAnswer && answer.id === item.id}
-                                        // defaultChecked={ShowAnswer && answer.id === item.id}
+                                            disabled
+                                            defaultChecked={answer.id === item.id}
                                         /> :
                                         <Radio
                                             name={id}
@@ -50,12 +50,9 @@ const ViewQCard: React.FC<ViewQCardProps> = ({
                                             containerProps={{
                                                 className: "p-0"
                                             }}
-                                            // checked={ShowAnswer && answer.id === item.id}
                                             defaultChecked={ShowAnswer && answer.id === item.id}
                                         />}
                                 </ListItemPrefix>
-
-
                                 <Typography color="blue-gray" className="font-medium">{item.value}</Typography>
                             </label>
                         </ListItem>

@@ -4,8 +4,7 @@ import MainContext from '@/context/mainContext'
 import Navbar from '../navbar/Navbar'
 import { v4 as uuidv4 } from 'uuid';
 import PlusForm from './plusForm';
-import { FormPage, MainContextInterface } from '@/interfaces/interfaces';
-
+import { FormPage, FormType } from '@/interfaces/interfaces';
 import dynamic from 'next/dynamic'
 import CardLoading from './CardLoading';
 
@@ -20,19 +19,29 @@ const HomePage = () => {
     const router = useRouter()
 
     const HandleAdd = () => {
-        const id = uuidv4()
-        router.push(`/forms/addForm/`)
+        const GenerateId = uuidv4()
+        const CreateForm = {
+            id: GenerateId, // get path is id
+            userName: "null",
+            userId: "null",
+            date: new Date(),
+            title: "Untitled Form",
+            description: "Add Description",
+            questions: [],
+        }
+        MainState.FormSubmit(CreateForm)
+        router.push(`/forms/edit/${GenerateId}`)
     }
 
     const HandleEdit = (id: string) => {
-        router.push(`/forms/${id}`)
+        router.push(`/forms/edit/${id}`)
     }
 
 
 
     return (
         <React.Fragment>
-            <Navbar title='Forms navbar' />
+            <Navbar title='Forms' />
             <div className='w-full justify-center
             items-center
             flex flex-wrap

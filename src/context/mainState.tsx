@@ -1,4 +1,5 @@
-import React, { use, useCallback, useEffect, useReducer } from 'react'
+'use client'
+import React, { useCallback, useEffect, useReducer } from 'react'
 import MainContext from './mainContext'
 import { MainReducer, initialState } from './mainReducer'
 import { FormPage } from '@/interfaces/interfaces'
@@ -27,11 +28,6 @@ const MainState: React.FC<MainStateProps> = ({
         })
     }, [state])
 
-    const FormSaveLocal = useCallback(() => {
-        // console.log(state)
-        localStorage.setItem('GoForm', JSON.stringify(state))
-    }, [state])
-
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -45,12 +41,13 @@ const MainState: React.FC<MainStateProps> = ({
         }
     }, [])
 
+    console.log(state)
+
     return (
         <MainContext.Provider value={{
             state,
             dispatch,
             FormSubmit,
-            FormSaveLocal
         }}>
             {children}
         </MainContext.Provider>

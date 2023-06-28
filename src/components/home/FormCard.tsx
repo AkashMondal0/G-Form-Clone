@@ -1,3 +1,4 @@
+'use client'
 import { Avatar, Card, CardBody, CardHeader, Typography } from '@/app/material'
 import { question } from '@/interfaces/interfaces'
 import React from 'react'
@@ -42,10 +43,10 @@ const FormCard: React.FC<FormCardProps> = ({
                         color="white"
                         className="mb-6 font-medium leading-[1.5]"
                     >
-                       {title} 
+                       {title || "Loading..."} 
                     </Typography>
                     <Typography variant="h6" className="mb-4 text-gray-400">
-                       {userName}
+                       {userName || "Loading..."}
                     </Typography>
                     <Avatar
                         size={`lg`}
