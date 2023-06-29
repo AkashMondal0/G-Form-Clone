@@ -1,5 +1,5 @@
 import { FormPage } from '@/interfaces/interfaces'
-import React from 'react'
+import React, { useEffect } from 'react'
 interface TitleBlockProps {
     Value: FormPage,
     onChangeValue: (data: FormPage) => void
@@ -15,6 +15,12 @@ const TitleBlock: React.FC<TitleBlockProps> = ({ Value, onChangeValue }) => {
             description: Description,
         })
     }
+
+    useEffect(() => {
+        setTitle(Value.title)
+        setDescription(Value.description)
+    }, [Value])
+
     return (
         <div>
             <div className="mb-4">
@@ -22,6 +28,7 @@ const TitleBlock: React.FC<TitleBlockProps> = ({ Value, onChangeValue }) => {
                     Form Title
                 </label>
                 <input onBlur={setInput}
+                    value={Title}
                     onChange={(e) => setTitle(e.target.value)}
                     id="Title" type="text" placeholder="Title" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
             </div>
@@ -30,6 +37,7 @@ const TitleBlock: React.FC<TitleBlockProps> = ({ Value, onChangeValue }) => {
                     Description
                 </label>
                 <input
+                    value={Description}
                     onChange={(e) => setDescription(e.target.value)}
                     onBlur={setInput}
                     id="Title" type="text" placeholder="Description" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />

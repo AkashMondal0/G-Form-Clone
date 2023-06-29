@@ -24,7 +24,7 @@ export const FormType = {
     id: uuidv4(), // get path is id
     userName: "null",
     userId: "null",
-    date: new Date() ,
+    date: new Date(),
     title: "Untitled Form",
     description: "Add Description",
     questions: [
@@ -32,10 +32,6 @@ export const FormType = {
             title: "Untitled Question",
             id: uuidv4(),
             options: [
-                {
-                    id: uuidv4(),
-                    value: "Option 1"
-                },
             ],
             answer: {
                 id: uuidv4(),
@@ -55,7 +51,7 @@ export interface Author {
 export interface MainState {
     Author: Author | null,
     token: string | null,
-    data: FormPage[] | Array<any>,
+    data: FormPage[] |[],
     isLogged: boolean,
     loading: boolean,
     status: number | null,
@@ -64,7 +60,7 @@ export interface MainState {
 
 export interface action {
     type: string,
-    payload: FormPage[]
+    payload: MainState[]
 }
 
 export interface MainContextInterface {

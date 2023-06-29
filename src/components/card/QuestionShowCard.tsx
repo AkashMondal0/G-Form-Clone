@@ -7,17 +7,15 @@ import { option, question } from '@/interfaces/interfaces';
 interface QuestionFormCardProps extends question {
     index: number,
     removeQuestion: (id: string) => void,
-    updateQuestion: (data: question, id: string) => void,
-    // addQuestion: (data: question) => void,
+    updateQuestion: (data: question) => void,
 }
 
 const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
     title, options, answer, required, id, index,
     removeQuestion,
     updateQuestion,
-    // addQuestion
 }) => {
-    const cardId = id
+
     const [optionsList, setOptionsList] = useState<option[]>(options);
     const [option, setOption] = useState<option>({
         id: uuidv4(),
@@ -37,8 +35,7 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
         id: id
     })
 
-    // for option
-
+    // for option add
     const addQuestion_Option = useCallback(() => {
         setOptionsList([...optionsList, option])
         setOption({
@@ -57,7 +54,6 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
     }, [optionsList, question])
 
     // for option update
-
     const onInputIn = useCallback((id: string) => {
         const findOption = optionsList.find((item) => item.id === id)!
         setOptionUpdate({
@@ -81,25 +77,43 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
             ...question,
             options: newData
         })
+    }, [optionsList, question, optionUpdate])
+
+    const submitQuestion = useCallback(() => {
         const data: question = {
-            id: question.id,
+            id: id,
             title: question.title,
-            options: newData,
+            options: optionsList,
             answer: question.answer,
             required: question.required
         }
-        updateQuestion(data, cardId)
-    }, [optionsList, question, optionUpdate, cardId, updateQuestion])
+        updateQuestion(data)
+    }, [id, optionsList, question.answer, question.required, question.title, updateQuestion])
 
+    useEffect(() => {
+        setQuestion({
+            title: title,
+            options: optionsList,
+            answer: answer,
+            required: required,
+            id: id
+        })
+        setOptionsList(options)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id])
+
+    // console.log(question)
     return (
         <Card>
             <div className='p-6'>
                 <div className='h-2 w-full flex justify-end'>
                     {question.required && <span className="text-red-500 mr-1 text-2xl text-end">*</span>}
                 </div>
+                {/* Question Header */}
                 <div className='my-10 flex gap-4'>
                     <h1 className='my-4 text-lg font-semibold'>{index + 1})</h1>
                     <Input
+                        name='title'
                         multiple
                         onChange={(e) => {
                             setQuestion({
@@ -107,10 +121,12 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
                                 title: e.target.value
                             })
                         }}
-                        value={question.title}
-                        variant="standard" label="Untitled Question" />
+                        value={question.title === "Untitled Question" ? "" : question.title}
+                        placeholder={question.title}
+                        variant="static"
+                    />
                 </div>
-
+                {/* /Option // */}
                 {optionsList.map((item, index) => {
                     return (
                         <div className="flex items-center my-4" key={index}>
@@ -125,6 +141,15 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
                                         className="hover:before:opacity-0"
                                         containerProps={{
                                             className: "p-0"
+                                        }}
+                                        onClick={() => {
+                                            setQuestion({
+                                                ...question,
+                                                answer: {
+                                                    id: item.id,
+                                                    value: item.value
+                                                }
+                                            })
                                         }}
                                     />
                                 </ListItemPrefix>
@@ -151,7 +176,7 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
                     )
                 })}
 
-                {/* ///// */}
+                {/* ///add option temp// */}
                 <div className="flex items-center my-6" >
                     <label htmlFor="vertical-list-svelte" className="px-3 py-2 flex items-center w-full cursor-pointer">
                         <ListItemPrefix className="mr-3">
@@ -196,7 +221,7 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
                                 })
                             }} />
                     </div>
-                    <Button color='green' onClick={() => { }}>Update</Button>
+                    <Button color='green' onClick={submitQuestion}>Update</Button>
                 </div>
             </div>
         </Card>

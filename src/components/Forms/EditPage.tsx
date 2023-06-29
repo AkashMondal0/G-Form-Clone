@@ -1,11 +1,12 @@
 'use client';
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import QuestionCard from '../card/QuestionShowCard';
-import QuestionFormCard from '../card/QuestionFormCard';
 import { Button } from '@/app/material';
 import MainContext from '@/context/mainContext';
 import TitleBlock from './TitleBlock';
 import { FormPage, FormType, question } from '@/interfaces/interfaces';
+import { v4 as uuidv4 } from 'uuid';
+import { useRouter } from 'next/navigation';
 
 interface EditPage {
     Form: FormPage
@@ -13,6 +14,7 @@ interface EditPage {
 const EditPage: React.FC<EditPage> = ({
     Form
 }) => {
+    const Router = useRouter()
     const MainState: any = useContext(MainContext)
     const [QuestionList, setQuestionList] = useState<question[]>([])
     const [form, setForm] = useState<FormPage>({
@@ -23,11 +25,21 @@ const EditPage: React.FC<EditPage> = ({
         questions: QuestionList
     })
 
-
+    // console.log(Form)
 
     const addQuestion = useCallback(() => {
-
-        setQuestionList([...QuestionList, FormType.questions[0]])
+        const newQuestion = {
+            title: "Untitled Question",
+            id: uuidv4(),
+            options: [
+            ],
+            answer: {
+                id: uuidv4(),
+                value: "Option 1"
+            },
+            required: false,
+        }
+        setQuestionList([...QuestionList, newQuestion])
     }, [QuestionList])
 
     const removeQuestion = useCallback((id: string) => {
@@ -35,32 +47,11 @@ const EditPage: React.FC<EditPage> = ({
         setQuestionList(newData)
     }, [QuestionList])
 
-    const updateQuestion = useCallback((data: question) => {
-
-        const newData = QuestionList.map((item) => {
-            if (item.id === data.id) {
-                return {
-                    title: data.title,
-                    id: data.id,
-                    options: data.options,
-                    answer: data.answer,
-                    required: data.required
-                }
-            } else {
-                return item
-            }
-        })
-        setQuestionList(newData)
+    const updateQuestion = useCallback((data: question) => { // TODO : on Mouse Out event update
+        const findIndex = QuestionList.findIndex((item) => item.id === data.id)
+        QuestionList.splice(findIndex, 1, data)
     }, [QuestionList])
 
-    // for question save 
-    const handleSubmit = () => {
-        const newForm = {
-            ...Form,
-            questions: QuestionList
-        }
-        MainState.updateForm(newForm)
-    }
 
     useEffect(() => {
         setQuestionList(Form.questions)
@@ -75,7 +66,16 @@ const EditPage: React.FC<EditPage> = ({
         })
     }, [Form])
 
-    // console.log(form)
+    // for question save 
+    const handleSubmit = () => {
+        const newForm = {
+            ...form,
+            questions: QuestionList
+        }
+        // console.log(newForm)
+        MainState.updateForm(newForm)
+        Router.push('/')
+    }
 
     return (
         <div className='w-max-[500px] mx-auto'>

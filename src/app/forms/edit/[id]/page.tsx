@@ -42,7 +42,6 @@ const FormDetails: React.FC = ({ params }: any) => {
     findForm()
   }, [])
 
-//  console.log(form)
   return (
     <Fragment>
       <MainState>
