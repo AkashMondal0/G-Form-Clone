@@ -1,7 +1,6 @@
 // Date: 04/08/21
 import { MainState, action } from "@/interfaces/interfaces"
 
-
 export const initialState: MainState = {
     Author: null,
     token: null,
@@ -46,6 +45,11 @@ export const MainReducer = (state: any, action: action) => {
         case 'START':
             return state = action.payload
 
+        case 'DELETE_FORM':
+            return {
+                ...state,
+                data: action.payload
+            }
         default:
             return state
     }

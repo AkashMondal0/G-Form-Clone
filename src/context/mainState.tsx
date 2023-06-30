@@ -21,7 +21,7 @@ const MainState: React.FC<MainStateProps> = ({
 }) => {
     const [state, dispatch] = useReducer(MainReducer, initialState)
 
-    const FormSubmit = useCallback((newForm: FormPage) => {
+    const CreateForm = useCallback((newForm: FormPage) => {
         const data = [...state.data, newForm]
         dispatch({
             type: 'SUBMIT_UPLOAD_FORM',
@@ -32,12 +32,20 @@ const MainState: React.FC<MainStateProps> = ({
     const updateForm = useCallback((newForm: FormPage) => {
         const findIndex = state.data.findIndex((item: FormPage) => item.id === newForm.id)
         state.data.splice(findIndex, 1, newForm)
-        console.log(state)
         dispatch({
             type: 'UPDATE_STATE_FORM',
             payload: state
         })
     }, [state])
+
+    const deleteForm = useCallback((id: string) => {
+        const data = state.data.filter((item: FormPage) => item.id !== id)
+        dispatch({
+            type: 'DELETE_FORM',
+            payload: data
+        })
+    }, [state])
+
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -55,8 +63,9 @@ const MainState: React.FC<MainStateProps> = ({
         <MainContext.Provider value={{
             state,
             dispatch,
-            FormSubmit,
+            CreateForm,
             updateForm,
+            deleteForm
         }}>
             {children}
         </MainContext.Provider>

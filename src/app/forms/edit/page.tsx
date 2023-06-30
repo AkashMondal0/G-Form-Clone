@@ -8,16 +8,19 @@ import Setting from '@/components/Tab/Setting'
 import EditPage from '@/components/Forms/EditPage'
 import Navbar from '@/components/navbar/Navbar'
 import MainState from '@/context/mainState'
+import { useSearchParams } from 'next/navigation'
 
+const FromCrud: React.FC = () => {
+  const searchParams = useSearchParams()
+  const formId = searchParams.get('id')
 
-const FormDetails: React.FC = ({ params }: any) => {
-  const [form, setForm] = useState<FormPage>({...FormType, id: params.id})
+  const [form, setForm] = useState<FormPage>({ ...FormType, id: `${formId}` })
 
   const FormTabs: TabProps[] = [
     {
       label: "Question",
       value: "Question",
-      Body: <EditPage Form={form}/>,
+      Body: <EditPage Form={form} />,
     },
     {
       label: "Responses",
@@ -34,7 +37,7 @@ const FormDetails: React.FC = ({ params }: any) => {
   const findForm = async () => {
     const data = localStorage.getItem('GoForm')
     const parsedData = JSON.parse(data!)
-    const form = parsedData.data.find((item: FormPage) => item.id === params.id)
+    const form = parsedData.data.find((item: FormPage) => item.id === formId)
     setForm(form)
   }
 
@@ -45,7 +48,7 @@ const FormDetails: React.FC = ({ params }: any) => {
   return (
     <Fragment>
       <MainState>
-        <Navbar title={form.title||""} />
+        <Navbar title={form.title || ""} />
         <TabCom FormData={FormTabs} />
       </MainState>
 
@@ -53,4 +56,4 @@ const FormDetails: React.FC = ({ params }: any) => {
   )
 }
 
-export default FormDetails
+export default FromCrud

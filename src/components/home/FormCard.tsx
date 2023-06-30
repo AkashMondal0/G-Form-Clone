@@ -1,14 +1,26 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
-import { Avatar, Card, CardBody, CardHeader, Typography } from '@/app/material'
-import { question } from '@/interfaces/interfaces'
 import React from 'react'
-interface FormCardProps { 
+import {
+    Avatar, Card, CardBody, CardHeader, Menu,
+    MenuHandler,
+    MenuList,
+    MenuItem, Typography, Button, CardFooter, Tooltip
+} from '@/app/material'
+import { question } from '@/interfaces/interfaces'
+import { BsThreeDotsVertical } from 'react-icons/bs'
+import { GoTrash } from 'react-icons/go'
+import { BiText } from 'react-icons/bi'
+import { RiShareBoxLine } from 'react-icons/ri'
+
+interface FormCardProps {
     id: string,
     userName?: string,
     userId?: string,
     date?: Date,
     questions?: question[]
     title: string
+    deleteForm: (id: string) => void
 }
 
 const FormCard: React.FC<FormCardProps> = ({
@@ -17,45 +29,41 @@ const FormCard: React.FC<FormCardProps> = ({
     userId,
     date,
     questions,
-    title
+    title,
+    deleteForm
 }) => {
+
     return (
         <div className='m-4 cursor-pointer'>
-            <Card
-                shadow={true}
-                className="relative 
-                grid h-[20rem]
-                w-[12rem] max-w-[12rem]
-                 items-end justify-center
-                  overflow-hidden text-center"
-            >
-                <CardHeader
-                    floated={false}
-                    shadow={false}
-                    color="transparent"
-                    className="absolute inset-0 m-0 h-full w-full rounded-none bg-[url('https://images.unsplash.com/photo-1552960562-daf630e9278b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80')] bg-cover bg-center"
-                >
-                    <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/80 via-black/50" />
-                </CardHeader>
-                <CardBody className="relative py-14 px-6 md:px-12">
-                    <Typography
-                        variant="h4"
-                        color="white"
-                        className="mb-6 font-medium leading-[1.5]"
-                    >
-                       {title || "Loading..."} 
+            <Card className="h-[20rem] w-[15rem] max-w-[15rem] overflow-hidden hover:border-gray-500 border-[1px]">
+                {/* image header */}
+                <img
+                    className='w-full object-cover'
+                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
+                    alt="ui/ux review check"
+                />
+                {/* title header */}
+                <div className='m-3'>
+                    <Typography variant="lead" color="gray" className="mt-3 font-normal text-ellipsis overflow-hidden">
+                        {title}
                     </Typography>
-                    <Typography variant="h6" className="mb-4 text-gray-400">
-                       {userName || "Loading..."}
-                    </Typography>
-                    <Avatar
-                        size={`lg`}
-                        variant="circular"
-                        alt="candice wu"
-                        className="border-2 border-white"
-                        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
-                    />
-                </CardBody>
+                </div>
+                {/* date and edit footer */}
+                <div className="flex items-center justify-between gap-3 m-3">
+                    <Typography className="font-normal text-sm">Opened January 10 2023</Typography>
+                    <Menu placement="right-start">
+                        <MenuHandler>
+                            <button className=' hover:bg-gray-200 w-8 h-8 rounded-full flex justify-center items-center'>
+                                <BsThreeDotsVertical size={20} />
+                            </button>
+                        </MenuHandler>
+                        <MenuList>
+                            <MenuItem onClick={() => { deleteForm(id) }} className='flex gap-2 text-base'><BiText size={20} />Rename</MenuItem>
+                            <MenuItem className='flex gap-2 text-base'><GoTrash size={20} />Remove</MenuItem>
+                            <MenuItem className='flex gap-2 text-base'><RiShareBoxLine size={20} />Open in new tab</MenuItem>
+                        </MenuList>
+                    </Menu>
+                </div>
             </Card>
         </div>
     )

@@ -8,7 +8,7 @@ const PlusForm = () => {
             <Card
                 shadow={true}
                 className="relative border-[1px] 
-                grid h-[20rem] w-[12rem] max-w-[12rem]
+                grid h-[20rem] w-[15rem] max-w-[15rem]
                 items-center justify-center overflow-hidden
                 text-center cursor-pointer">
                 <HiPlus size={100} />

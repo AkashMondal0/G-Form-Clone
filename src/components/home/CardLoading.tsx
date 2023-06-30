@@ -9,7 +9,7 @@ const CardLoading = () => {
                 shadow={true}
                 className="relative 
                 grid h-[20rem]
-                w-[12rem] max-w-[12rem]
+                w-[15rem] max-w-[15rem]
                  items-end justify-center
                   overflow-hidden text-center"
             >

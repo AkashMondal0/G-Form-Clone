@@ -7,7 +7,7 @@ import TitleBlock from './TitleBlock';
 import { FormPage, FormType, question } from '@/interfaces/interfaces';
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/navigation';
-
+import { BsPlusCircle } from 'react-icons/bs';
 interface EditPage {
     Form: FormPage
 }
@@ -97,7 +97,7 @@ const EditPage: React.FC<EditPage> = ({
                 )
             })}
             <div className='my-4'>
-                <Button onClick={addQuestion}>Add Question</Button>
+                <Button onClick={addQuestion}> <BsPlusCircle size={20}/></Button>
             </div>
             {/* <div className='my-4'>
                 <QuestionFormCard
@@ -107,7 +107,9 @@ const EditPage: React.FC<EditPage> = ({
                 />
             </div> */}
             <div className='my-4'>
-                <Button onClick={handleSubmit}>Submit</Button>
+                <Button onClick={handleSubmit}>
+                   Submit
+                </Button>
             </div>
         </div>
     )

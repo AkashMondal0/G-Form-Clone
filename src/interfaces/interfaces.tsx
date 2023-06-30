@@ -51,7 +51,7 @@ export interface Author {
 export interface MainState {
     Author: Author | null,
     token: string | null,
-    data: FormPage[] |[],
+    data: FormPage[] | [],
     isLogged: boolean,
     loading: boolean,
     status: number | null,
@@ -66,7 +66,14 @@ export interface action {
 export interface MainContextInterface {
     state: MainState,
     dispatch: React.Dispatch<action>,
-    handleSubmit: () => void,
+}
+
+export interface MainStateProvider {
+    state: MainState,
+    dispatch: React.Dispatch<action>,
+    CreateForm: (newForm: FormPage) => void,
+    updateForm: (newForm: FormPage) => void,
+    deleteForm: (id: string) => void,
 }
 
 export interface TabProps {

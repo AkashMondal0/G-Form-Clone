@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react'
 import { Button, Card, Input, ListItemPrefix, Radio, Switch, Typography } from "../../app/material";
-import { HiXMark, HiPlus } from "react-icons/hi2";
+import { HiXMark, HiPlus, HiMiniTrash } from "react-icons/hi2";
 import { v4 as uuidv4 } from 'uuid';
 import { option, question } from '@/interfaces/interfaces';
 
@@ -88,9 +89,10 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
             required: question.required
         }
         updateQuestion(data)
-    }, [id, optionsList, question.answer, question.required, question.title, updateQuestion])
+    }, [id, optionsList, question, updateQuestion])
 
     useEffect(() => {
+        console.log('load')
         setQuestion({
             title: title,
             options: optionsList,
@@ -99,7 +101,6 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
             id: id
         })
         setOptionsList(options)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id])
 
     // console.log(question)
@@ -209,18 +210,24 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
                     </label>
                 </div>
                 <div className='flex justify-between'>
-                    <div>
-                        <Typography variant='h6' className='text-gray-500'>Required</Typography>
-                        <Switch
-                            checked={question.required}
-                            id={question.id}
-                            onChange={() => {
-                                setQuestion({
-                                    ...question,
-                                    required: !question.required
-                                })
-                            }} />
+                    <div className='flex gap-5'>
+                        <div>
+                            <Typography variant='h6' className='text-gray-500'>Required</Typography>
+                            <Switch
+                                checked={question.required}
+                                id={question.id}
+                                onChange={() => {
+                                    setQuestion({
+                                        ...question,
+                                        required: !question.required
+                                    })
+                                }} />
+                        </div>
+                        <Button color='red' onClick={() => { removeQuestion(id) }}>
+                            <HiMiniTrash size={28} />
+                        </Button>
                     </div>
+
                     <Button color='green' onClick={submitQuestion}>Update</Button>
                 </div>
             </div>
