@@ -5,6 +5,7 @@ import {
     Button,
     Input,
     Switch,
+    Tooltip,
     Textarea,
     Radio,
     Card,
@@ -20,6 +21,11 @@ import {
     TabsBody,
     Tab,
     TabPanel,
+    Menu,
+    MenuHandler,
+    MenuList,
+    MenuItem,
+    CardFooter
 } from "@material-tailwind/react";
 
 export {
@@ -42,4 +48,10 @@ export {
     TabsBody,
     Tab,
     TabPanel,
+    Menu,
+    MenuHandler,
+    MenuList,
+    MenuItem,
+    CardFooter,
+    Tooltip
 };
