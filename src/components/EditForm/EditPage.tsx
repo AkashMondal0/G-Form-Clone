@@ -35,6 +35,7 @@ const EditPage: React.FC<EditPage> = ({
                 value: "Option 1"
             },
             required: false,
+            responses: []
         }
         setQuestionList([...QuestionList, newQuestion])
     }, [QuestionList])
@@ -59,7 +60,8 @@ const EditPage: React.FC<EditPage> = ({
             questions: Form.questions,
             userId: Form.userId,
             userName: Form.userName,
-            date: Form.date
+            date: Form.date,
+            userResponse: Form.userResponse
         })
     }, [Form])
 
@@ -76,8 +78,12 @@ const EditPage: React.FC<EditPage> = ({
         Router.push('/')
     }
 
+    const handleLink = () => {
+        Router.push(`/forms/viewForm?id=${form.id}`)
+    }
+
     return (
-        <div className='w-max-[500px] mx-auto'>
+        <div className='mx-auto min-h-[100vh]'>
             <TitleBlock Value={form} onChangeValue={setForm} />
 
             {QuestionList.map((item: question, index: number) => {
@@ -91,7 +97,8 @@ const EditPage: React.FC<EditPage> = ({
                             required={item.required}
                             id={item.id}
                             updateQuestion={updateQuestion}
-                            removeQuestion={removeQuestion} />
+                            removeQuestion={removeQuestion} 
+                            responses={item.responses} />
                     </div>
                 )
             })}
@@ -103,6 +110,11 @@ const EditPage: React.FC<EditPage> = ({
             <div className='my-4'>
                 <Button onClick={handleSubmit}>
                     Submit
+                </Button>
+            </div>
+            <div className='my-4'>
+                <Button color='green' onClick={handleLink}>
+                    Link
                 </Button>
             </div>
         </div>

@@ -1,19 +1,30 @@
 'use client'
 import { Card, List, ListItem, ListItemPrefix, Radio, Typography } from '@/app/material'
-import { question } from '@/interfaces/interfaces'
-import React from 'react'
+import { option, question, sendAnswer } from '@/interfaces/interfaces'
+import React, { useState } from 'react'
+
 
 interface ViewQCardProps {
     question: question
     ShowAnswer: boolean
+    sendAnswer: (data: sendAnswer) => void
 }
 
 const ViewQCard: React.FC<ViewQCardProps> = ({
     question,
-    ShowAnswer
+    ShowAnswer,
+    sendAnswer
 }) => {
-
     const { title, options, required, id, answer } = question
+
+    const handleSubmit = (optionValue: option) => {
+        sendAnswer({
+            questionId: id,
+            userId: "userId",
+            optionValue: optionValue
+        })
+
+    }
 
     return (
         <div className='my-5'>
@@ -43,6 +54,7 @@ const ViewQCard: React.FC<ViewQCardProps> = ({
                                             defaultChecked={answer.id === item.id}
                                         /> :
                                         <Radio
+                                            onClick={() => handleSubmit(item)}
                                             name={id}
                                             id={item.id}
                                             ripple={false}

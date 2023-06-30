@@ -41,10 +41,6 @@ const HomePage = () => {
         router.push(`/forms/edit/?id=${GenerateId}`)
     }
 
-    const EditFormHandle = (id: string) => {
-        router.push(`/forms/edit/?id=${id}`)
-    }
-
 
 
     return (
@@ -54,22 +50,22 @@ const HomePage = () => {
             items-center
             flex flex-wrap
             gap-4
+            bg-gray-200
+            min-h-[100vh]
             '>
                 <Card
                     onClick={CreateFormHandle}
                     shadow={true}
-                    className="relative border-[1px] m-4 
+                    className="relative m-4 
                 grid h-[20rem] w-[15rem] max-w-[15rem]
+                hover:border-gray-500 border-[1px]
                 items-center justify-center overflow-hidden
                 text-center cursor-pointer">
                     <HiPlus size={100} />
                 </Card>
 
                 {MainState.state.data?.map((item: FormPage, index: number) => {
-                    return <div key={item.id}
-                        onClick={() => { EditFormHandle(item.id) }}>
-                        <FormCard id={item.id} title={item.title} MainState={MainState} />
-                    </div>
+                    return <FormCard key={item.id} id={item.id} title={item.title} MainState={MainState} />
                 })}
             </div>
         </React.Fragment>

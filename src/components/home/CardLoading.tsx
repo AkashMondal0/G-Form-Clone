@@ -2,15 +2,16 @@ import React from 'react'
 import { Card, CardHeader } from '@/app/material'
 
 const CardLoading = () => {
-  return (
-    <div className='m-4'>
+    return (
+        <div className='m-4 hover:border-gray-500 border-[1px]'>
             <Card
                 shadow={true}
                 className="relative 
                 grid h-[20rem]
                 w-[15rem] max-w-[15rem]
-                 items-end justify-center
-                  overflow-hidden text-center"
+                items-end justify-center
+              hover:border-gray-500 border-[1px]
+                overflow-hidden text-center"
             >
                 <CardHeader
                     floated={false}
@@ -22,7 +23,7 @@ const CardLoading = () => {
                 </CardHeader>
             </Card>
         </div>
-  )
+    )
 }
 
 export default CardLoading
