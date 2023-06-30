@@ -1,12 +1,14 @@
 import { FormPage } from '@/interfaces/interfaces'
 import React, { useEffect } from 'react'
+
+
 interface TitleBlockProps {
-    Value: FormPage,
+    Value: FormPage ,
     onChangeValue: (data: FormPage) => void
 }
 const TitleBlock: React.FC<TitleBlockProps> = ({ Value, onChangeValue }) => {
-    const [Title, setTitle] = React.useState<string>('')
-    const [Description, setDescription] = React.useState<string>('')
+    const [Title, setTitle] = React.useState<string>('No Title')
+    const [Description, setDescription] = React.useState<string>('No Description')
 
     const setInput = () => {
         onChangeValue({

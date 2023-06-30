@@ -1,8 +1,7 @@
 'use client'
-import React, { useCallback, useEffect, useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import MainContext from './mainContext'
 import { MainReducer, initialState } from './mainReducer'
-import { FormPage } from '@/interfaces/interfaces'
 
 const getLocal = () => {
     if (typeof window !== "undefined") {
@@ -15,37 +14,10 @@ interface MainStateProps {
     children: React.ReactNode
 }
 
-
 const MainState: React.FC<MainStateProps> = ({
     children
 }) => {
     const [state, dispatch] = useReducer(MainReducer, initialState)
-
-    const CreateForm = useCallback((newForm: FormPage) => {
-        const data = [...state.data, newForm]
-        dispatch({
-            type: 'SUBMIT_UPLOAD_FORM',
-            payload: data
-        })
-    }, [state.data])
-
-    const updateForm = useCallback((newForm: FormPage) => {
-        const findIndex = state.data.findIndex((item: FormPage) => item.id === newForm.id)
-        state.data.splice(findIndex, 1, newForm)
-        dispatch({
-            type: 'UPDATE_STATE_FORM',
-            payload: state
-        })
-    }, [state])
-
-    const deleteForm = useCallback((id: string) => {
-        const data = state.data.filter((item: FormPage) => item.id !== id)
-        dispatch({
-            type: 'DELETE_FORM',
-            payload: data
-        })
-    }, [state])
-
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -63,9 +35,6 @@ const MainState: React.FC<MainStateProps> = ({
         <MainContext.Provider value={{
             state,
             dispatch,
-            CreateForm,
-            updateForm,
-            deleteForm
         }}>
             {children}
         </MainContext.Provider>

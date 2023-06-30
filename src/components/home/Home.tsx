@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
 import { useRouter } from 'next/navigation'
 import MainContext from '@/context/mainContext'
-import Navbar from '../navbar/Navbar'
+import Navbar from '../Navbar/Navbar'
 import { v4 as uuidv4 } from 'uuid';
-import PlusForm from './plusForm';
-import { FormPage, FormType, MainStateProvider } from '@/interfaces/interfaces';
+import { FormPage, MainStateProvider } from '@/interfaces/interfaces';
 import dynamic from 'next/dynamic'
 import CardLoading from './CardLoading';
+import { Card } from '@/app/material';
+import { HiPlus } from 'react-icons/hi2';
 
 const FormCard = dynamic(() => import('./FormCard'), {
     loading: () => <CardLoading />,
@@ -18,9 +19,9 @@ const HomePage = () => {
     const MainState = useContext<MainStateProvider>(MainContext)
     const router = useRouter()
 
-    const HandleAdd = () => {
+    const CreateFormHandle = () => {
         const GenerateId = uuidv4()
-        const User = {
+        const User = { //TODO: get user data from context
             userName: "Akash",
             userId: "92188918291",
         }
@@ -31,13 +32,16 @@ const HomePage = () => {
             date: new Date(),
             title: "Untitled Form",
             description: "Add Description",
-            questions: FormType.questions,
+            questions: [],
         }
-        MainState.CreateForm(CreateNewFormTemp)
+        MainState.dispatch({
+            type: 'Create_Form',
+            payload: CreateNewFormTemp
+        })
         router.push(`/forms/edit/?id=${GenerateId}`)
     }
 
-    const HandleEdit = (id: string) => {
+    const EditFormHandle = (id: string) => {
         router.push(`/forms/edit/?id=${id}`)
     }
 
@@ -51,10 +55,21 @@ const HomePage = () => {
             flex flex-wrap
             gap-4
             '>
-                <div onClick={HandleAdd}><PlusForm /></div>
+                <Card
+                    onClick={CreateFormHandle}
+                    shadow={true}
+                    className="relative border-[1px] m-4 
+                grid h-[20rem] w-[15rem] max-w-[15rem]
+                items-center justify-center overflow-hidden
+                text-center cursor-pointer">
+                    <HiPlus size={100} />
+                </Card>
+
                 {MainState.state.data?.map((item: FormPage, index: number) => {
-                    return <div key={item.id} onClick={() => { HandleEdit(item.id) }}>
-                        <FormCard id={item.id} title={item.title} deleteForm={MainState.deleteForm} /></div>
+                    return <div key={item.id}
+                        onClick={() => { EditFormHandle(item.id) }}>
+                        <FormCard id={item.id} title={item.title} MainState={MainState} />
+                    </div>
                 })}
             </div>
         </React.Fragment>

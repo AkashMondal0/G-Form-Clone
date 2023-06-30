@@ -92,18 +92,16 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
     }, [id, optionsList, question, updateQuestion])
 
     useEffect(() => {
-        console.log('load')
         setQuestion({
             title: title,
-            options: optionsList,
+            options: options,
             answer: answer,
             required: required,
             id: id
         })
         setOptionsList(options)
     }, [id])
-
-    // console.log(question)
+    
     return (
         <Card>
             <div className='p-6'>

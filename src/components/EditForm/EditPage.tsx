@@ -1,13 +1,14 @@
 'use client';
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import QuestionCard from '../card/QuestionShowCard';
+import QuestionCard from './QuestionCard';
 import { Button } from '@/app/material';
 import MainContext from '@/context/mainContext';
 import TitleBlock from './TitleBlock';
-import { FormPage, FormType, question } from '@/interfaces/interfaces';
+import { FormPage, MainStateProvider, question } from '@/interfaces/interfaces';
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/navigation';
 import { BsPlusCircle } from 'react-icons/bs';
+
 interface EditPage {
     Form: FormPage
 }
@@ -15,17 +16,13 @@ const EditPage: React.FC<EditPage> = ({
     Form
 }) => {
     const Router = useRouter()
-    const MainState: any = useContext(MainContext)
+    const MainState = useContext<MainStateProvider>(MainContext)
     const [QuestionList, setQuestionList] = useState<question[]>([])
     const [form, setForm] = useState<FormPage>({
-        ...FormType,
-        id: Form.id,
-        title: Form.title,
-        description: Form.description,
-        questions: QuestionList
+        ...Form,
+        title: "Untitled Form",
+        description: "No Description",
     })
-
-    // console.log(Form)
 
     const addQuestion = useCallback(() => {
         const newQuestion = {
@@ -56,13 +53,13 @@ const EditPage: React.FC<EditPage> = ({
     useEffect(() => {
         setQuestionList(Form.questions)
         setForm({
-            ...FormType,
             id: Form.id,
             title: Form.title,
             description: Form.description,
             questions: Form.questions,
             userId: Form.userId,
             userName: Form.userName,
+            date: Form.date
         })
     }, [Form])
 
@@ -72,15 +69,17 @@ const EditPage: React.FC<EditPage> = ({
             ...form,
             questions: QuestionList
         }
-        // console.log(newForm)
-        MainState.updateForm(newForm)
+        MainState.dispatch({
+            type: 'Update_Form',
+            payload: newForm
+        })
         Router.push('/')
     }
 
     return (
         <div className='w-max-[500px] mx-auto'>
             <TitleBlock Value={form} onChangeValue={setForm} />
-            {/* show array questions */}
+
             {QuestionList.map((item: question, index: number) => {
                 return (
                     <div className='my-5' key={index}>
@@ -97,18 +96,13 @@ const EditPage: React.FC<EditPage> = ({
                 )
             })}
             <div className='my-4'>
-                <Button onClick={addQuestion}> <BsPlusCircle size={20}/></Button>
+                <Button className='w-full' onClick={addQuestion}>
+                    {/* <BsPlusCircle size={20} /> */}
+                    Add Question</Button>
             </div>
-            {/* <div className='my-4'>
-                <QuestionFormCard
-                    addQuestion={addQuestion}
-                    removeQuestion={removeQuestion}
-                    updateQuestion={updateQuestion}
-                />
-            </div> */}
             <div className='my-4'>
                 <Button onClick={handleSubmit}>
-                   Submit
+                    Submit
                 </Button>
             </div>
         </div>

@@ -1,20 +1,40 @@
 'use client'
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FormPage, FormType, TabProps } from '@/interfaces/interfaces'
+import { FormPage, TabProps } from '@/interfaces/interfaces'
 import React, { Fragment, useEffect, useState } from 'react'
 import TabCom from '@/components/Tab/Tab'
 import Responses from '@/components/Tab/Responses'
 import Setting from '@/components/Tab/Setting'
-import EditPage from '@/components/Forms/EditPage'
-import Navbar from '@/components/navbar/Navbar'
+import EditPage from '@/components/EditForm/EditPage'
+import Navbar from '@/components/Navbar/Navbar'
 import MainState from '@/context/mainState'
 import { useSearchParams } from 'next/navigation'
-
+import { v4 as uuidv4 } from 'uuid'
+const DummyForm = {
+  id: uuidv4(), // get path is id
+  userName: "null",
+  userId: "null",
+  date: new Date(),
+  title: "Untitled Form",
+  description: "Add Description",
+  questions: [
+    {
+      title: "Untitled Question",
+      id: uuidv4(),
+      options: [
+      ],
+      answer: {
+        id: uuidv4(),
+        value: "Option 1"
+      },
+      required: false,
+    },
+  ],
+}
 const FromCrud: React.FC = () => {
   const searchParams = useSearchParams()
   const formId = searchParams.get('id')
-
-  const [form, setForm] = useState<FormPage>({ ...FormType, id: `${formId}` })
+  const [form, setForm] = useState<FormPage>({ ...DummyForm, id: `${formId}` })
 
   const FormTabs: TabProps[] = [
     {

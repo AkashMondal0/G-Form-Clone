@@ -2,12 +2,12 @@
 'use client'
 import React from 'react'
 import {
-    Avatar, Card, CardBody, CardHeader, Menu,
+    Card, Menu,
     MenuHandler,
     MenuList,
-    MenuItem, Typography, Button, CardFooter, Tooltip
+    MenuItem, Typography,
 } from '@/app/material'
-import { question } from '@/interfaces/interfaces'
+import { MainStateProvider, question } from '@/interfaces/interfaces'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { GoTrash } from 'react-icons/go'
 import { BiText } from 'react-icons/bi'
@@ -19,8 +19,8 @@ interface FormCardProps {
     userId?: string,
     date?: Date,
     questions?: question[]
-    title: string
-    deleteForm: (id: string) => void
+    title: string,
+    MainState?: MainStateProvider,
 }
 
 const FormCard: React.FC<FormCardProps> = ({
@@ -30,8 +30,16 @@ const FormCard: React.FC<FormCardProps> = ({
     date,
     questions,
     title,
-    deleteForm
+    MainState
 }) => {
+
+    const remove_form = () => {
+        MainState?.dispatch({
+            type: 'Remove_Form',
+            payload: id
+        })
+    }
+
 
     return (
         <div className='m-4 cursor-pointer'>
@@ -58,7 +66,7 @@ const FormCard: React.FC<FormCardProps> = ({
                             </button>
                         </MenuHandler>
                         <MenuList>
-                            <MenuItem onClick={() => { deleteForm(id) }} className='flex gap-2 text-base'><BiText size={20} />Rename</MenuItem>
+                            <MenuItem onClick={remove_form} className='flex gap-2 text-base'><BiText size={20} />Rename</MenuItem>
                             <MenuItem className='flex gap-2 text-base'><GoTrash size={20} />Remove</MenuItem>
                             <MenuItem className='flex gap-2 text-base'><RiShareBoxLine size={20} />Open in new tab</MenuItem>
                         </MenuList>
