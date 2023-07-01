@@ -12,7 +12,7 @@ interface QuestionFormCardProps extends question {
 }
 
 const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
-    title, options, answer, required, id, index,responses,
+    title, options, answer, required, id, index, responses,
     removeQuestion,
     updateQuestion,
 }) => {
@@ -34,7 +34,7 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
         answer: answer,
         required: required,
         id: id,
-        responses:responses
+        responses: responses
     })
 
     // for option add
@@ -88,7 +88,7 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
             options: optionsList,
             answer: question.answer,
             required: question.required,
-            responses:question.responses
+            responses: question.responses
         }
         updateQuestion(data)
     }, [id, optionsList, question, updateQuestion])
@@ -100,11 +100,11 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
             answer: answer,
             required: required,
             id: id,
-            responses:responses
+            responses: responses
         })
         setOptionsList(options)
     }, [id])
-    
+
     return (
         <Card>
             <div className='p-6'>

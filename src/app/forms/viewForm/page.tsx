@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { DummyForm, FormPage } from '@/interfaces/interfaces'
 import ViewForm from '@/components/viewForm/ViewForm'
+import MainState from '@/context/mainState'
 
 const ViewFormPage = () => {
     const searchParams = useSearchParams()
@@ -22,9 +23,11 @@ const ViewFormPage = () => {
     }, [])
 
     return (
-       <React.Fragment>
-        <ViewForm form={form} ShowAnswer={false} />
-       </React.Fragment>
+        <React.Fragment>
+            <MainState>
+                <ViewForm form={form} ShowAnswer={false} />
+            </MainState>
+        </React.Fragment>
     )
 }
 

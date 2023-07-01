@@ -30,7 +30,7 @@ const MainState: React.FC<MainStateProps> = ({
             }
         }
     }, [])
-
+    // console.log(state.data)
     return (
         <MainContext.Provider value={{
             state,

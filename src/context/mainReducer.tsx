@@ -1,5 +1,5 @@
 // Date: 04/08/21
-import { FormPage, MainState, action } from "@/interfaces/interfaces"
+import { FormPage, MainState, action, userResponse } from "@/interfaces/interfaces"
 
 export const initialState: MainState = {
     Author: null,
@@ -16,7 +16,7 @@ export const MainReducer = (state: MainState, action: action): MainState => {
         case 'START':
             return state = action.payload
 
-        // new update code
+        // 
         case 'Create_Form':
             const data = [...state.data, action.payload]
             const Create_Form_newData = {
@@ -35,6 +35,7 @@ export const MainReducer = (state: MainState, action: action): MainState => {
                 ...state,
                 data: state.data,
             }
+
         case 'Remove_Form':
             const Remove_Form_Data = state.data.filter((item: FormPage) => item.id !== action.payload)
             const Remove_Form_newData = {
@@ -43,6 +44,24 @@ export const MainReducer = (state: MainState, action: action): MainState => {
             }
             localStorage.setItem('GoForm', JSON.stringify(Remove_Form_newData))
             return Remove_Form_newData
+
+        // unique type logic
+        case 'VIEW_SUBMIT_FORM':
+            const Data_From_User: userResponse = action.payload
+            const indexFrom = state.data.findIndex((item) => item.id === Data_From_User.formId)
+            if (indexFrom !== -1) {
+                const indexUserResponse = state.data[indexFrom].userResponse.findIndex((item) => item.userId === Data_From_User.userId)
+                if (indexUserResponse !== -1) {
+                    state.data[indexFrom].userResponse.splice(indexUserResponse, 1, Data_From_User)
+                    // console.log('replace')
+                } else {
+                    state.data[indexFrom].userResponse.push(Data_From_User)
+                    // console.log('push')
+                }
+            }
+            // console.log(state)
+            return state
+
         default:
             return state
     }

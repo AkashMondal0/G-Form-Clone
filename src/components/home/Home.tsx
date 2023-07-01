@@ -20,19 +20,20 @@ const HomePage = () => {
     const router = useRouter()
 
     const CreateFormHandle = () => {
-        const GenerateId = uuidv4()
+        const GenerateId: string = uuidv4()
         const User = { //TODO: get user data from context
             userName: "Akash",
             userId: "92188918291",
         }
-        const CreateNewFormTemp = {
-            id: GenerateId, // get path is id
+        const CreateNewFormTemp: FormPage = {
+            id: GenerateId,
             userName: User.userName,
             userId: User.userId,
             date: new Date(),
             title: "Untitled Form",
             description: "Add Description",
             questions: [],
+            userResponse: []
         }
         MainState.dispatch({
             type: 'Create_Form',

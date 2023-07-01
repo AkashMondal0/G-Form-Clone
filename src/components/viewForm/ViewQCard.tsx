@@ -7,13 +7,15 @@ import React, { useState } from 'react'
 interface ViewQCardProps {
     question: question
     ShowAnswer: boolean
+    index: number
     sendAnswer: (data: sendAnswer) => void
 }
 
 const ViewQCard: React.FC<ViewQCardProps> = ({
     question,
     ShowAnswer,
-    sendAnswer
+    sendAnswer,
+    index
 }) => {
     const { title, options, required, id, answer } = question
 
@@ -34,7 +36,7 @@ const ViewQCard: React.FC<ViewQCardProps> = ({
                 </div>
                 <List>
                     <div className='ml-4 m-3 break-words text-start'>
-                        <Typography variant="h5">{title || ""}</Typography>
+                    <Typography variant="h5">{index+1}) {title || ""}</Typography>
                     </div>
                     {options.map((item, index) => {
                         return <ListItem className="p-0" key={index}>

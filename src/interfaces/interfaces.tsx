@@ -33,11 +33,16 @@ export interface ResponseOption {
   userId: string,
   optionValue: option
 }
+export interface userAnswers {
+
+  questionId: string
+  userOption: option
+}
 export interface userResponse {
   id: string,
   formId: string,
   userId: string,
-  userAnswers: question[],
+  userAnswers: userAnswers[],
 }
 export interface question {
   title: string,
@@ -67,7 +72,7 @@ export interface TabProps {
   value: string,
   Body: React.ReactElement
 }
-export const DummyForm = {
+export const DummyForm: FormPage = {
   id: uuidv4(), // get path is id
   userName: "null",
   userId: "null",
@@ -84,6 +89,8 @@ export const DummyForm = {
         value: "Option 1"
       },
       required: false,
+      responses: []
     },
   ],
+  userResponse: []
 }
