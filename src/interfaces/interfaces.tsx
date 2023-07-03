@@ -29,14 +29,12 @@ export interface option {
   id: string,
   value: string,
 }
-export interface ResponseOption {
-  userId: string,
-  optionValue: option
-}
-export interface userAnswers {
 
+export interface userAnswers {
   questionId: string
   userOption: option
+  id: string
+  userId: string,
 }
 export interface userResponse {
   id: string,
@@ -50,9 +48,9 @@ export interface question {
   options: option[],
   answer: option,
   required: boolean,
-  responses: ResponseOption[]
+  responses: userAnswers[]
 }
-export interface sendAnswer extends ResponseOption {
+export interface sendAnswer extends userAnswers {
   questionId: string
 }
 // form data

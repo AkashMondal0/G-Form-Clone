@@ -7,7 +7,7 @@ import TitleBlock from './TitleBlock';
 import { FormPage, MainStateProvider, question } from '@/interfaces/interfaces';
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/navigation';
-import { BsPlusCircle } from 'react-icons/bs';
+// import { BsPlusCircle } from 'react-icons/bs';
 
 interface EditPage {
     Form: FormPage
@@ -82,6 +82,7 @@ const EditPage: React.FC<EditPage> = ({
         Router.push(`/forms/viewForm?id=${form.id}`)
     }
 
+    // console.log(Form)
     return (
         <div className='mx-auto min-h-[100vh]'>
             <TitleBlock Value={form} onChangeValue={setForm} />

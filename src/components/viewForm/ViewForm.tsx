@@ -2,7 +2,12 @@
 import { Button, Typography } from '@/app/material'
 import React, { useContext, useState } from 'react'
 import ViewQCard from './ViewQCard'
-import { FormPage, MainStateProvider, sendAnswer, userAnswers, userResponse } from '@/interfaces/interfaces'
+import {
+    FormPage, MainStateProvider,
+    sendAnswer,
+    userAnswers,
+    userResponse
+} from '@/interfaces/interfaces'
 import Navbar from '../Navbar/Navbar'
 import { v4 as uuidv4 } from 'uuid';
 import MainContext from '@/context/mainContext'
@@ -11,6 +16,8 @@ interface ViewFormProps {
     form: FormPage
     ShowAnswer: boolean
 }
+
+
 const ViewForm: React.FC<ViewFormProps> = ({
     form,
     ShowAnswer
@@ -19,27 +26,33 @@ const ViewForm: React.FC<ViewFormProps> = ({
     const { title, description, questions, id } = form
     const [userAnswer, setUserAnswer] = useState<userResponse>({
         id: uuidv4(),
-        userId: "akashI3456D5dv623457",
+        userId: "akashI3456D5dv623457789", //TODO
         formId: id,
-        userAnswers: []
+        userAnswers: [],
     })
 
 
     const sendAnswer = (data: sendAnswer) => {
-        const { questionId, optionValue }: sendAnswer = data
-        const answer: userAnswers = {
+        const { questionId, userOption, userId }: sendAnswer = data
+        ///
+        const responsesQuestion: userAnswers = {
             questionId: questionId,
-            userOption: optionValue
+            userId: userId,
+            userOption: userOption,
+            id: uuidv4(),
         }
-        const findIndex = userAnswer.userAnswers.findIndex((item) => item.questionId === questionId)
-        if (findIndex !== -1) {
-            userAnswer.userAnswers.splice(findIndex, 1, answer)
-        }
-        else {
+        
+        const findIndexQuestion = userAnswer.userAnswers.findIndex((item) => item.questionId === questionId)
+        if (findIndexQuestion !== -1 && userAnswer.userAnswers[findIndexQuestion].userId === userId) {
+            userAnswer.userAnswers.splice(findIndexQuestion, 1, responsesQuestion)
+            // console.log("replace")
+        } else {
+            const data = [...userAnswer.userAnswers, responsesQuestion]
             setUserAnswer({
                 ...userAnswer,
-                userAnswers: [...userAnswer.userAnswers, answer]
+                userAnswers: data
             })
+            // console.log("add new")
         }
     }
 

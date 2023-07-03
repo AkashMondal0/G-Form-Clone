@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Setting = () => {
+const SettingTab = () => {
   return (
-    <div className='w-full h-screen bg-gray-200'>Setting</div>
+    <div className='w-full h-screen bg-gray-200'>SettingTab</div>
   )
 }
 
-export default Setting
+export default SettingTab

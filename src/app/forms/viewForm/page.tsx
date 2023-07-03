@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { DummyForm, FormPage } from '@/interfaces/interfaces'
 import ViewForm from '@/components/viewForm/ViewForm'
 import MainState from '@/context/mainState'
+import { getLocal } from '@/context/mainReducer'
 
 const ViewFormPage = () => {
     const searchParams = useSearchParams()
@@ -12,9 +13,8 @@ const ViewFormPage = () => {
     const [form, setForm] = useState<FormPage>({ ...DummyForm, id: `${formId}` })
 
     const findForm = async () => {
-        const data = localStorage.getItem('GoForm')
-        const parsedData = JSON.parse(data!)
-        const form = parsedData.data.find((item: FormPage) => item.id === formId)
+        const data = getLocal().data
+        const form = data.find((item: FormPage) => item.id === formId)
         setForm(form)
     }
 

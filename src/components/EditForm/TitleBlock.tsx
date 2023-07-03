@@ -1,5 +1,5 @@
 import { FormPage } from '@/interfaces/interfaces'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 
 interface TitleBlockProps {
@@ -7,8 +7,8 @@ interface TitleBlockProps {
     onChangeValue: (data: FormPage) => void
 }
 const TitleBlock: React.FC<TitleBlockProps> = ({ Value, onChangeValue }) => {
-    const [Title, setTitle] = React.useState<string>('No Title')
-    const [Description, setDescription] = React.useState<string>('No Description')
+    const [Title, setTitle] = useState<string>('No Title')
+    const [Description, setDescription] = useState<string>('No Description')
 
     const setInput = () => {
         onChangeValue({
@@ -24,7 +24,7 @@ const TitleBlock: React.FC<TitleBlockProps> = ({ Value, onChangeValue }) => {
     }, [Value])
 
     return (
-        <div>
+        <React.Fragment>
             <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                     Form Title
@@ -32,7 +32,9 @@ const TitleBlock: React.FC<TitleBlockProps> = ({ Value, onChangeValue }) => {
                 <input onBlur={setInput}
                     value={Title}
                     onChange={(e) => setTitle(e.target.value)}
-                    id="Title" type="text" placeholder="Title" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                    id="Title" type="text" placeholder="Title" 
+                    className="shadow appearance-none border rounded w-full py-2 px-3 
+                    text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
             </div>
             <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
@@ -44,7 +46,7 @@ const TitleBlock: React.FC<TitleBlockProps> = ({ Value, onChangeValue }) => {
                     onBlur={setInput}
                     id="Title" type="text" placeholder="Description" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
             </div>
-        </div>
+        </React.Fragment>
     )
 }
 

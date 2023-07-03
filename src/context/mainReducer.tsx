@@ -11,6 +11,13 @@ export const initialState: MainState = {
     error: false,
 }
 
+export const getLocal = () => {
+    if (typeof window !== "undefined") {
+        const Local = localStorage.getItem('GoForm')
+        return localStorage.getItem('GoForm') ? JSON.parse(Local!) : false;
+    }
+}
+
 export const MainReducer = (state: MainState, action: action): MainState => {
     switch (action.type) {
         case 'START':
@@ -49,17 +56,30 @@ export const MainReducer = (state: MainState, action: action): MainState => {
         case 'VIEW_SUBMIT_FORM':
             const Data_From_User: userResponse = action.payload
             const indexFrom = state.data.findIndex((item) => item.id === Data_From_User.formId)
+
             if (indexFrom !== -1) {
                 const indexUserResponse = state.data[indexFrom].userResponse.findIndex((item) => item.userId === Data_From_User.userId)
                 if (indexUserResponse !== -1) {
                     state.data[indexFrom].userResponse.splice(indexUserResponse, 1, Data_From_User)
                     // console.log('replace')
                 } else {
-                    state.data[indexFrom].userResponse.push(Data_From_User)
                     // console.log('push')
+                    state.data[indexFrom].userResponse.push(Data_From_User)
                 }
+
+                Data_From_User.userAnswers.map((question) => {
+                    const questionFindIndex = state.data[indexFrom].questions.findIndex((item) => item.id === question.questionId)
+                    const SameId = state.data[indexFrom].questions[questionFindIndex].responses.findIndex((item) => item.userId === question.userId)
+                    if (questionFindIndex !== -1 && SameId !== -1) {
+                        return state.data[indexFrom].questions[questionFindIndex].responses.splice(SameId, 1, question)
+                    } else {
+                        state.data[indexFrom].questions[questionFindIndex].responses.push(Data_From_User.userAnswers[questionFindIndex])
+                        return state
+                    }
+                })
             }
-            // console.log(state)
+            // 
+            localStorage.setItem('GoForm', JSON.stringify(state))
             return state
 
         default:

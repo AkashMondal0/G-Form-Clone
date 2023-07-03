@@ -3,7 +3,7 @@ import { Card, CardHeader } from '@/app/material'
 
 const CardLoading = () => {
     return (
-        <div className='m-4 hover:border-gray-500 border-[1px]'>
+        <div className='m-4'>
             <Card
                 shadow={true}
                 className="relative 

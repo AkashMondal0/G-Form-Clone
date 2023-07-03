@@ -1,16 +1,32 @@
-import { Card } from '@/app/material'
 import React from 'react'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-
+import { question } from '@/interfaces/interfaces';
 ChartJS.register(ArcElement, Tooltip, Legend);
-const Chart = () => {
+
+interface ChartProps {
+  question: question
+}
+
+const Chart: React.FC<ChartProps> = ({
+  question
+}) => {
+  const { title, options, responses } = question
+
+  const labels = () => {
+    const arr: string[] = []
+    options.map((item) => {
+      arr.push(item.value)
+    })
+    return arr
+  }
+
   const data = {
-    labels: ['akash', 'Rohit', 'olivia', 'aunty', 'mal', 'bal'],
+    labels: labels(), // answer Option
     datasets: [
       {
-        label: '# of Votes',
-        data: [12, 19,12,32,12],
+        label: ' of Votes',
+        data: [25, 25, 25, 25],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -32,10 +48,18 @@ const Chart = () => {
     ],
   }
   return (
-    <div className='w-full flex justify-center'>
-      <div className='w-full flex justify-center bg-white rounded-xl shadow-md'>
-        <div className='w-96 h-96 m-10'>
-          <Pie data={data} />
+    <div className='w-full flex justify-center bg-white rounded-xl shadow-md my-5 pb-5'>
+      <div className='w-full p-5'>
+        <div className="block text-gray-700 text-xl mb-2">
+          {title}
+        </div>
+        <div className="block text-gray-700 text-sm mb-2">
+          Response {responses.length}
+        </div>
+        <div className='w-full flex justify-center '>
+          <div className='w-72 h-72 text-center'>
+            <Pie data={data} />
+          </div>
         </div>
       </div>
     </div>

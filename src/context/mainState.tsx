@@ -1,14 +1,8 @@
 'use client'
 import React, { useEffect, useReducer } from 'react'
 import MainContext from './mainContext'
-import { MainReducer, initialState } from './mainReducer'
+import { MainReducer, getLocal, initialState } from './mainReducer'
 
-const getLocal = () => {
-    if (typeof window !== "undefined") {
-        const Local = localStorage.getItem('GoForm')
-        return localStorage.getItem('GoForm') ? JSON.parse(Local!) : false;
-    }
-}
 
 interface MainStateProps {
     children: React.ReactNode
