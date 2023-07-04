@@ -32,7 +32,7 @@ const EditPage: React.FC<EditPage> = ({
             ],
             answer: {
                 id: uuidv4(),
-                value: "Option 1"
+                value: "Option 1",
             },
             required: false,
             responses: []

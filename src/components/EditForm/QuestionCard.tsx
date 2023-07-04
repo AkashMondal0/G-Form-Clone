@@ -20,12 +20,16 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
     const [optionsList, setOptionsList] = useState<option[]>(options);
     const [option, setOption] = useState<option>({
         id: uuidv4(),
-        value: ""
+        value: "",
+        responsesCount: 0,
+        responsesUserId: []
     }) // ref 
 
     const [optionUpdate, setOptionUpdate] = useState<option>({
         id: '',
-        value: ""
+        value: "",
+        responsesCount: 0,
+        responsesUserId: []
     }) // ref
 
     const [question, setQuestion] = useState<question>({
@@ -42,7 +46,9 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
         setOptionsList([...optionsList, option])
         setOption({
             id: uuidv4(),
-            value: ""
+            value: "",
+            responsesCount: 0,
+            responsesUserId: []
         })
     }, [optionsList, option])
 

@@ -1,9 +1,9 @@
 import React from 'react'
-import Chart from '../Chart/Chart'
 import { FormPage, TabProps } from '@/interfaces/interfaces'
 import TabMain from './TabMain'
 import QuestionTab from './responses/questionTab'
 import SummaryTab from './responses/summaryTab'
+import IndividualTab from './responses/individualTab'
 
 interface ResponsesTabProps {
     Form: FormPage
@@ -12,14 +12,11 @@ interface ResponsesTabProps {
 const ResponsesTab: React.FC<ResponsesTabProps> = ({
     Form
 }) => {
-    const { questions } = Form
     const FormTabs: TabProps[] = [
         {
             label: "Summary",
             value: "Summary",
-            Body: <React.Fragment>
-                {questions.map((question, index) => <Chart key={question.id} question={question} />)}
-            </React.Fragment>,
+            Body: <SummaryTab Form={Form} />,
         },
         {
             label: "Question",
@@ -29,7 +26,7 @@ const ResponsesTab: React.FC<ResponsesTabProps> = ({
         {
             label: "Individual",
             value: "Individual",
-            Body: <SummaryTab Form={Form} />,
+            Body: <IndividualTab Form={Form} />,
         },
     ]
 

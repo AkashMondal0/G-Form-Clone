@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import { question } from '@/interfaces/interfaces';
@@ -13,20 +13,23 @@ const Chart: React.FC<ChartProps> = ({
 }) => {
   const { title, options, responses } = question
 
-  const labels = () => {
-    const arr: string[] = []
+  const setValues = () => {
+    const labelArray: string[] = []
+    const DataArray: number[] = []
     options.map((item) => {
-      arr.push(item.value)
+      labelArray.push(item.value)
+      DataArray.push(item.responsesCount!)
     })
-    return arr
+    return { labelArray, DataArray }
   }
 
+
   const data = {
-    labels: labels(), // answer Option
+    labels: setValues().labelArray, // answer Option
     datasets: [
       {
         label: ' of Votes',
-        data: [25, 25, 25, 25],
+        data: setValues().DataArray,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',

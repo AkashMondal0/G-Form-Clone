@@ -28,6 +28,8 @@ export interface MainStateProvider {
 export interface option {
   id: string,
   value: string,
+  responsesCount?: number
+  responsesUserId?: string[]
 }
 
 export interface userAnswers {

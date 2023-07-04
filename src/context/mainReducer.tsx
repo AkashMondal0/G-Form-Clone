@@ -56,7 +56,6 @@ export const MainReducer = (state: MainState, action: action): MainState => {
         case 'VIEW_SUBMIT_FORM':
             const Data_From_User: userResponse = action.payload
             const indexFrom = state.data.findIndex((item) => item.id === Data_From_User.formId)
-
             if (indexFrom !== -1) {
                 const indexUserResponse = state.data[indexFrom].userResponse.findIndex((item) => item.userId === Data_From_User.userId)
                 if (indexUserResponse !== -1) {
@@ -71,9 +70,23 @@ export const MainReducer = (state: MainState, action: action): MainState => {
                     const questionFindIndex = state.data[indexFrom].questions.findIndex((item) => item.id === question.questionId)
                     const SameId = state.data[indexFrom].questions[questionFindIndex].responses.findIndex((item) => item.userId === question.userId)
                     if (questionFindIndex !== -1 && SameId !== -1) {
+                        // state.data[indexFrom].questions[questionFindIndex].options.map((item, index) => {
+                        // if (item.id === question.userOption.id) {
+                        //     item.responsesUserId?.splice(0, 1)
+                        //     item.responsesUserId?.push(Data_From_User.userId) 
+                        //     // console.log("already")
+                        // }
+                        // })
                         return state.data[indexFrom].questions[questionFindIndex].responses.splice(SameId, 1, question)
                     } else {
                         state.data[indexFrom].questions[questionFindIndex].responses.push(Data_From_User.userAnswers[questionFindIndex])
+                        state.data[indexFrom].questions[questionFindIndex].options.map((item) => {
+                            if (item.id === question.userOption.id) {
+                                item.responsesCount = +1
+                                item.responsesUserId?.push(Data_From_User.userId)
+                                // console.log("increment")
+                            }
+                        })
                         return state
                     }
                 })

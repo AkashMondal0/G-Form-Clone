@@ -17,12 +17,12 @@ const ViewQCard: React.FC<ViewQCardProps> = ({
     sendAnswer,
     index
 }) => {
-    const { title, options, required, id, answer } = question
+    const { title, options, required, id, answer,responses } = question
 
     const handleSubmit = (optionValue: option) => {
         sendAnswer({
             questionId: id,
-            userId: "akashI3456D5dv623457789",
+            userId: "56D5d233232342323323245673489",
             userOption: optionValue,
             id: ''
         })
