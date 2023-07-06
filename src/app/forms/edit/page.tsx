@@ -33,6 +33,7 @@ const FromCrud: React.FC = () => {
       Body: <Setting />,
     },
   ]
+  const [activeTab, setActiveTab] = useState<string>(FormTabs[0].value);
 
 
   const findForm = async () => {
@@ -49,7 +50,11 @@ const FromCrud: React.FC = () => {
     <Fragment>
       <MainState>
         <Navbar title={form.title || ""} />
-        <TabCom FormData={FormTabs} TabHeaderCss={'w-60'} />
+        <TabCom
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          FormData={FormTabs}
+          TabHeaderCss={'w-60'} />
       </MainState>
 
     </Fragment>

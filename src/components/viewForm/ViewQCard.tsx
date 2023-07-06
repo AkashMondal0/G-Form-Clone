@@ -9,14 +9,17 @@ interface ViewQCardProps {
     ShowAnswer: boolean
     index: number
     sendAnswer: (data: sendAnswer) => void
+    UserSelectedData?: string
 }
 
 const ViewQCard: React.FC<ViewQCardProps> = ({
     question,
     ShowAnswer,
     sendAnswer,
-    index
+    index,
+    UserSelectedData
 }) => {
+    console.log(UserSelectedData)
     const { title, options, required, id, answer,responses } = question
 
     const handleSubmit = (optionValue: option) => {
@@ -54,7 +57,7 @@ const ViewQCard: React.FC<ViewQCardProps> = ({
                                             }}
                                             color='green'
                                             disabled
-                                            defaultChecked={answer.id === item.id}
+                                            defaultChecked={answer.id === item.id || UserSelectedData === item.id}
                                         /> :
                                         <Radio
                                             onClick={() => handleSubmit(item)}

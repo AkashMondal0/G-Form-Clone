@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormPage, TabProps } from '@/interfaces/interfaces'
 import TabMain from './TabMain'
 import QuestionTab from './responses/questionTab'
@@ -12,11 +12,14 @@ interface ResponsesTabProps {
 const ResponsesTab: React.FC<ResponsesTabProps> = ({
     Form
 }) => {
+    const [activeTab, setActiveTab] = useState<string>('Summary');
+
     const FormTabs: TabProps[] = [
         {
             label: "Summary",
             value: "Summary",
-            Body: <SummaryTab Form={Form} />,
+            Body: <SummaryTab
+                Form={Form} />,
         },
         {
             label: "Question",
@@ -26,13 +29,16 @@ const ResponsesTab: React.FC<ResponsesTabProps> = ({
         {
             label: "Individual",
             value: "Individual",
-            Body: <IndividualTab Form={Form} />,
+            Body: <>coming soon</>,
         },
     ]
+
 
     return (
         <div className='w-full justify-center flex bg-gray-200 min-h-screen'>
             <TabMain
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
                 FormData={FormTabs}
                 TabHeaderCss='w-[600px] 
                 bg-white h-20 rounded-3xl'

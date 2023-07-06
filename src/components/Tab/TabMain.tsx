@@ -13,13 +13,16 @@ interface TabMainProps {
     FormData: TabProps[]
     TabHeaderCss?: string
     TabIndicatorCss?: string
+    activeTab: string
+    setActiveTab: (value: string) => void
 }
 const TabMain: React.FC<TabMainProps> = ({
     FormData: data,
     TabHeaderCss,
-    TabIndicatorCss
+    TabIndicatorCss,
+    activeTab,
+    setActiveTab
 }) => {
-    const [activeTab, setActiveTab] = useState(data[0].value);
 
     return (
         <div className='w-full justify-center flex bg-gray-200'>
@@ -35,7 +38,7 @@ const TabMain: React.FC<TabMainProps> = ({
                                 <Tab
                                     key={value}
                                     value={value}
-                                    onClick={() => setActiveTab(value)}
+                                    onClick={() =>{ setActiveTab(value)}}
                                     className={activeTab === value ? "text-blue-500 font-semibold" : "font-semibold"}
                                 >
                                     {label}
