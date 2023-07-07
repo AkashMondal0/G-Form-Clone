@@ -18,8 +18,7 @@ const ResponsesTab: React.FC<ResponsesTabProps> = ({
         {
             label: "Summary",
             value: "Summary",
-            Body: <SummaryTab
-                Form={Form} />,
+            Body: <SummaryTab Form={Form} />,
         },
         {
             label: "Question",
@@ -29,7 +28,7 @@ const ResponsesTab: React.FC<ResponsesTabProps> = ({
         {
             label: "Individual",
             value: "Individual",
-            Body: <>coming soon</>,
+            Body: <IndividualTab Form={Form} />,
         },
     ]
 

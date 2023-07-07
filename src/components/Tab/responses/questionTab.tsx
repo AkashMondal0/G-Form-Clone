@@ -17,36 +17,17 @@ const QuestionTab: React.FC<QuestionTabProp> = ({
 }) => {
   const { questions, id, userResponse } = Form
   const [index, setIndex] = useState<number>(0) // question index
-  const [steps, setSteps] = useState<steps>({
-    step: 0,
-    Data: [{
-      questionId: "",
-      userOption: {
-        id: "",
-        value: ""
-      },
-      id: "",
-      userId: "",
-    }]
-  }) // steps index
 
   const individualTab = (userId: string) => {
     userResponse.find((item) => {
       if (item.userId === userId) {
-        setSteps({
-          step: 1,
-          Data: item.userAnswers
-        })
+       
       }
     })
   }
 
-  if (steps.step === 1) {
-    return <IndividualTab questions={questions}
-      UserSelectedData={steps.Data} />
-  }
 
-  return <React.Fragment>
+  return <> <React.Fragment>
     <Card className='p-4'>
       <div className='my-4 flex justify-between'>
         <DropDown
@@ -62,10 +43,10 @@ const QuestionTab: React.FC<QuestionTabProp> = ({
     </Card>
     <Card className='my-4'>
       <div className='ml-4 m-3 break-words text-start'>
-        <Typography variant="h5">{questions[index].title}</Typography>
+        <Typography variant="h5">{questions[index]?.title}</Typography>
       </div>
     </Card>
-    {questions[index].responses.map((item, index) => <div key={index}>
+    {questions[index]?.responses.map((item, index) => <div key={index}>
       <Card className='my-4'>
         <div className='flex items-center px-4'>
           <Radio
@@ -83,15 +64,12 @@ const QuestionTab: React.FC<QuestionTabProp> = ({
           </div>
         </div>
         <hr className='mx-5' />
-        <div onClick={() => { individualTab(item.userId) }} className='ml-4 m-3 break-words text-start text-blue-500 text-base cursor-pointer'>
+        <div className='ml-4 m-3 break-words text-start text-blue-500 text-base cursor-pointer'>
           <Typography variant="h6">Response</Typography>
         </div>
       </Card>
     </div>)}
-    {/* <Card className='p-4'>
-
-    </Card> */}
-  </React.Fragment>
+  </React.Fragment></>
 }
 
 export default QuestionTab

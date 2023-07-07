@@ -43,7 +43,7 @@ const Pagination: React.FC<Pagination> = ({
         </Button>
         <div className="flex items-center gap-2">
 
-            <div>{index + 1}</div>
+            <div>{totalLength === 0 ? 0 : index + 1}</div>
             of
             <div>{totalLength}</div>
         </div>
@@ -56,7 +56,7 @@ const Pagination: React.FC<Pagination> = ({
         >
             Next
             {/* <ArrowRightIcon strokeWidth={2} className="h-4 w-4" /> */}
-            
+
         </Button>
     </div>
 }

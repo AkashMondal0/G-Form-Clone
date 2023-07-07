@@ -9,7 +9,6 @@ interface ViewQCardProps {
     ShowAnswer: boolean
     index: number
     sendAnswer: (data: sendAnswer) => void
-    UserSelectedData?: string
 }
 
 const ViewQCard: React.FC<ViewQCardProps> = ({
@@ -17,19 +16,17 @@ const ViewQCard: React.FC<ViewQCardProps> = ({
     ShowAnswer,
     sendAnswer,
     index,
-    UserSelectedData
 }) => {
-    console.log(UserSelectedData)
-    const { title, options, required, id, answer,responses } = question
+    const { title, options, required, id, answer, responses } = question
 
     const handleSubmit = (optionValue: option) => {
         sendAnswer({
             questionId: id,
-            userId: "56D5d233232342323323245673489",
+            userId: "23323245673489",
             userOption: optionValue,
             id: ''
         })
-        
+
     }
 
     return (
@@ -40,36 +37,37 @@ const ViewQCard: React.FC<ViewQCardProps> = ({
                 </div>
                 <List>
                     <div className='ml-4 m-3 break-words text-start'>
-                    <Typography variant="h5">{index+1}) {title || ""}</Typography>
+                        <Typography variant="h5">{index + 1}) {title || ""}</Typography>
                     </div>
                     {options.map((item, index) => {
                         return <ListItem className="p-0" key={index}>
                             <label htmlFor={item.id} className="px-3 py-2 flex items-center w-full cursor-pointer">
                                 <ListItemPrefix className="mr-3">
-                                    {ShowAnswer ?
-                                        <Radio
-                                            name={id}
-                                            id={item.id}
-                                            ripple={false}
-                                            className="hover:before:opacity-0"
-                                            containerProps={{
-                                                className: "p-0"
-                                            }}
-                                            color='green'
-                                            disabled
-                                            defaultChecked={answer.id === item.id || UserSelectedData === item.id}
-                                        /> :
-                                        <Radio
-                                            onClick={() => handleSubmit(item)}
-                                            name={id}
-                                            id={item.id}
-                                            ripple={false}
-                                            className="hover:before:opacity-0"
-                                            containerProps={{
-                                                className: "p-0"
-                                            }}
-                                            defaultChecked={ShowAnswer && answer.id === item.id}
-                                        />}
+                                    <>
+                                        {ShowAnswer ?
+                                            <Radio
+                                                name={id}
+                                                id={item.id}
+                                                ripple={false}
+                                                className="hover:before:opacity-0"
+                                                containerProps={{
+                                                    className: "p-0"
+                                                }}
+                                                color='green'
+                                                disabled
+                                                defaultChecked={answer.id === item.id}
+                                            /> :
+                                            <Radio
+                                                onClick={() => handleSubmit(item)}
+                                                name={id}
+                                                id={item.id}
+                                                ripple={false}
+                                                className="hover:before:opacity-0"
+                                                containerProps={{
+                                                    className: "p-0"
+                                                }}
+                                                defaultChecked={ShowAnswer && answer.id === item.id}
+                                            />}</>
                                 </ListItemPrefix>
                                 <Typography color="blue-gray" className="font-medium">{item.value}</Typography>
                             </label>
