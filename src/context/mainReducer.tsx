@@ -18,6 +18,12 @@ export const getLocal = () => {
     }
 }
 
+export const setLocal = (data: MainState) => {
+    if (typeof window !== "undefined") {
+        localStorage.setItem('GoForm', JSON.stringify(data))
+    }
+}
+
 export const MainReducer = (state: MainState, action: action): MainState => {
     switch (action.type) {
         case 'START':
@@ -94,6 +100,29 @@ export const MainReducer = (state: MainState, action: action): MainState => {
             // 
             localStorage.setItem('GoForm', JSON.stringify(state))
             return state
+        case 'REGISTER':
+            // const { displayName, email, photoURL, uid } = action.payload
+            console.log("displayName, email, photoURL, uid")
+            // const Register_newData = {
+            //     ...state,
+            //     Author: action.payload,
+            // }
+            // localStorage.setItem('GoForm', JSON.stringify(Register_newData))
+            return state
+
+        case 'LOGOUT':
+            const Logout_newData = {
+                ...state,
+            }
+            localStorage.setItem('GoForm', JSON.stringify(Logout_newData))
+            return Logout_newData
+
+        case 'LOGIN':
+            const Login_newData = {
+                ...state,
+            }
+            localStorage.setItem('GoForm', JSON.stringify(Login_newData))
+            return Login_newData
 
         default:
             return state

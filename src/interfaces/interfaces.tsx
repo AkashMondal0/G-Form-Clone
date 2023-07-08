@@ -2,9 +2,8 @@ import { v4 as uuidv4 } from 'uuid';
 export interface Author {
   name: string,
   email: string,
-  password: string,
-  date: Date
-  forms: FormPage[]
+  photoURL: string,
+  uid: string,
 }
 export interface MainState {
   Author: Author | null,

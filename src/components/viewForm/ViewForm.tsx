@@ -26,7 +26,7 @@ const ViewForm: React.FC<ViewFormProps> = ({
     const { title, description, questions, id } = form
     const [userAnswer, setUserAnswer] = useState<userResponse>({
         id: uuidv4(),
-        userId: "23323245673489", //TODO
+        userId: MainState.state.Author?.uid || "*",
         formId: id,
         userAnswers: [],
     })
@@ -34,14 +34,13 @@ const ViewForm: React.FC<ViewFormProps> = ({
 
     const sendAnswer = (data: sendAnswer) => {
         const { questionId, userOption, userId }: sendAnswer = data
-        ///
         const responsesQuestion: userAnswers = {
             questionId: questionId,
             userId: userId,
             userOption: userOption,
             id: uuidv4(),
         }
-        
+
         const findIndexQuestion = userAnswer.userAnswers.findIndex((item) => item.questionId === questionId)
         if (findIndexQuestion !== -1 && userAnswer.userAnswers[findIndexQuestion].userId === userId) {
             userAnswer.userAnswers.splice(findIndexQuestion, 1, responsesQuestion)
@@ -75,8 +74,14 @@ const ViewForm: React.FC<ViewFormProps> = ({
                     <div className='flex justify-center'>
                         <div className='w-[500px]'>
                             {questions.map((item, index) => <ViewQCard
-                                sendAnswer={sendAnswer} key={item.id}
-                                question={item} ShowAnswer={ShowAnswer}
+                                user={{
+                                    uid: MainState.state.Author?.uid || "",
+                                    username: MainState.state.Author?.name || ""
+                                }}
+                                sendAnswer={sendAnswer}
+                                key={item.id}
+                                question={item}
+                                ShowAnswer={ShowAnswer}
                                 index={index} />)}
                         </div>
                     </div>

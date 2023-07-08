@@ -22,8 +22,8 @@ const HomePage = () => {
     const CreateFormHandle = () => {
         const GenerateId: string = uuidv4()
         const User = { //TODO: get user data from context
-            userName: "Akash",
-            userId: "92188918291",
+            userName: MainState.state.Author?.name || "no user",
+            userId: MainState.state.Author?.uid || "",
         }
         const CreateNewFormTemp: FormPage = {
             id: GenerateId,
@@ -63,9 +63,10 @@ const HomePage = () => {
                 items-center justify-center overflow-hidden
                 text-center cursor-pointer">
                     <HiPlus size={100} />
+                    <div></div>
                 </Card>
 
-                {MainState.state.data?.map((item: FormPage, index: number) => {
+                {MainState.state.data?.map((item: FormPage) => {
                     return <FormCard key={item.id} id={item.id} title={item.title} MainState={MainState} />
                 })}
             </div>

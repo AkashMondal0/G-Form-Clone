@@ -3,12 +3,16 @@ import { Card, List, ListItem, ListItemPrefix, Radio, Typography } from '@/app/m
 import { option, question, sendAnswer } from '@/interfaces/interfaces'
 import React, { useState } from 'react'
 
-
+interface user {
+    uid: string | null
+    username: string | null
+}
 interface ViewQCardProps {
     question: question
     ShowAnswer: boolean
     index: number
     sendAnswer: (data: sendAnswer) => void
+    user: user
 }
 
 const ViewQCard: React.FC<ViewQCardProps> = ({
@@ -16,17 +20,17 @@ const ViewQCard: React.FC<ViewQCardProps> = ({
     ShowAnswer,
     sendAnswer,
     index,
+    user
 }) => {
     const { title, options, required, id, answer, responses } = question
 
     const handleSubmit = (optionValue: option) => {
         sendAnswer({
             questionId: id,
-            userId: "23323245673489",
+            userId: user.uid || '',
             userOption: optionValue,
             id: ''
         })
-
     }
 
     return (

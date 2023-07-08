@@ -26,7 +26,8 @@ import {
     MenuList,
     MenuItem,
     CardFooter,
-    IconButton
+    IconButton,
+    Checkbox
 } from "@material-tailwind/react";
 
 export {
@@ -55,5 +56,6 @@ export {
     MenuItem,
     CardFooter,
     Tooltip,
-    IconButton
+    IconButton,
+    Checkbox
 };

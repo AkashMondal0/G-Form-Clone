@@ -8,10 +8,7 @@ import IndividualTab from './individualTab'
 interface QuestionTabProp {
   Form: FormPage
 }
-interface steps {
-  step: number,
-  Data: userAnswers[]
-}
+
 const QuestionTab: React.FC<QuestionTabProp> = ({
   Form
 }) => {
@@ -43,7 +40,7 @@ const QuestionTab: React.FC<QuestionTabProp> = ({
     </Card>
     <Card className='my-4'>
       <div className='ml-4 m-3 break-words text-start'>
-        <Typography variant="h5">{questions[index]?.title}</Typography>
+        <Typography variant="h5">{questions[index]?.title} </Typography>
       </div>
     </Card>
     {questions[index]?.responses.map((item, index) => <div key={index}>
