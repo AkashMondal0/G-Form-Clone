@@ -1,9 +1,8 @@
 import { Card, Radio, Typography } from '@/app/material'
 import DropDown from '@/components/DropDown/DropDown'
 import Pagination from '@/components/Pagination/pagination'
-import { FormPage, userAnswers } from '@/interfaces/interfaces'
+import { DummyForm, FormPage } from '@/interfaces/interfaces'
 import React, { useState } from 'react'
-import IndividualTab from './individualTab'
 
 interface QuestionTabProp {
   Form: FormPage
@@ -13,16 +12,7 @@ const QuestionTab: React.FC<QuestionTabProp> = ({
   Form
 }) => {
   const { questions, id, userResponse } = Form
-  const [index, setIndex] = useState<number>(0) // question index
-
-  const individualTab = (userId: string) => {
-    userResponse.find((item) => {
-      if (item.userId === userId) {
-       
-      }
-    })
-  }
-
+  const [index, setIndex] = useState<number>(0)
 
   return <> <React.Fragment>
     <Card className='p-4'>

@@ -9,12 +9,14 @@ import EditPage from '@/components/EditForm/EditPage'
 import Navbar from '@/components/Navbar/Navbar'
 import MainState from '@/context/mainState'
 import { useSearchParams } from 'next/navigation'
-import { getLocal } from '@/context/mainReducer'
+import { ReadForm } from '@/app/form'
+import useLoading from '@/hook/Loading'
 
 const FromCrud: React.FC = () => {
   const searchParams = useSearchParams()
-  const formId = searchParams.get('id')
+  const formId = searchParams.get('id') || ""
   const [form, setForm] = useState<FormPage>({ ...DummyForm, id: `${formId}` })
+  const Loading = useLoading()
 
   const FormTabs: TabProps[] = [
     {
@@ -37,19 +39,22 @@ const FromCrud: React.FC = () => {
 
 
   const findForm = async () => {
-    const data = getLocal().data
-    const form = data.find((item: FormPage) => item.id === formId)
-    setForm(form)
+    const data = await ReadForm(formId) as FormPage
+    setForm(data)
+    Loading.stopLoading()
   }
 
   useEffect(() => {
-    findForm()
+    Loading.startLoading()
+    if (formId) {
+      findForm()
+    }
+    // console.log(Loading.isLoading)
   }, [])
-
   return (
     <Fragment>
       <MainState>
-        <Navbar title={form.title || ""} />
+        <Navbar title={form?.title || ""} />
         <TabCom
           activeTab={activeTab}
           setActiveTab={setActiveTab}

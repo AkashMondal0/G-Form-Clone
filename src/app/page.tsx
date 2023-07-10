@@ -8,7 +8,7 @@ function Home() {
   const router = useRouter()
 
   useEffect(() => {
-    const token = getLocal().isLogged
+    const token = getLocal()
     if (token) {
       router.push('/forms/')
     } else {

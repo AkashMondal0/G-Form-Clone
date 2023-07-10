@@ -1,6 +1,6 @@
 import { Card, List, ListItem, Typography } from '@/app/material'
 import Pagination from '@/components/Pagination/pagination'
-import { FormPage } from '@/interfaces/interfaces'
+import { DummyForm, FormPage } from '@/interfaces/interfaces'
 import React, { useState } from 'react'
 
 
@@ -11,7 +11,7 @@ const IndividualTab: React.FC<IndividualTabProp> = ({
     Form
 }) => {
 
-    const { userResponse, questions, id } = Form
+    const { userResponse, questions, id } = Form || DummyForm
     const [index, setIndex] = useState<number>(0) // question index
 
     const findUserAnswer = (questionId: string) => {

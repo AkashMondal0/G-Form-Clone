@@ -3,6 +3,7 @@ import { Button, Typography } from '@/app/material'
 import React, { useContext, useState } from 'react'
 import ViewQCard from './ViewQCard'
 import {
+    DummyForm,
     FormPage, MainStateProvider,
     sendAnswer,
     userAnswers,
@@ -11,6 +12,7 @@ import {
 import Navbar from '../Navbar/Navbar'
 import { v4 as uuidv4 } from 'uuid';
 import MainContext from '@/context/mainContext'
+import { useRouter } from 'next/navigation'
 
 interface ViewFormProps {
     form: FormPage
@@ -23,7 +25,8 @@ const ViewForm: React.FC<ViewFormProps> = ({
     ShowAnswer
 }) => {
     const MainState = useContext<MainStateProvider>(MainContext)
-    const { title, description, questions, id } = form
+    const router = useRouter()
+    const { title, description, questions, id } = form || DummyForm
     const [userAnswer, setUserAnswer] = useState<userResponse>({
         id: uuidv4(),
         userId: MainState.state.Author?.uid || "*",
@@ -58,8 +61,9 @@ const ViewForm: React.FC<ViewFormProps> = ({
     const handleSubmit = () => {
         MainState.dispatch({
             type: "VIEW_SUBMIT_FORM",
-            payload: userAnswer
+            payload: {userAnswer,form}
         })
+        router.push("/forms/")
     }
 
     return (

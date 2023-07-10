@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic'
 import CardLoading from './CardLoading';
 import { Card } from '@/app/material';
 import { HiPlus } from 'react-icons/hi2';
+import { CreateForm } from '@/app/form';
 
 const FormCard = dynamic(() => import('./FormCard'), {
     loading: () => <CardLoading />,
@@ -39,6 +40,8 @@ const HomePage = () => {
             type: 'Create_Form',
             payload: CreateNewFormTemp
         })
+
+        CreateForm(CreateNewFormTemp)
         router.push(`/forms/edit/?id=${GenerateId}`)
     }
 
@@ -47,7 +50,8 @@ const HomePage = () => {
     return (
         <React.Fragment>
             <Navbar title='Forms' />
-            <div className='w-full justify-center
+            <div className='
+            w-full justify-center
             items-center
             flex flex-wrap
             gap-4
@@ -66,8 +70,8 @@ const HomePage = () => {
                     <div></div>
                 </Card>
 
-                {MainState.state.data?.map((item: FormPage) => {
-                    return <FormCard key={item.id} id={item.id} title={item.title} MainState={MainState} />
+                {MainState.state.data?.map((item) => {
+                    return <FormCard key={item} id={item} MainState={MainState} />
                 })}
             </div>
         </React.Fragment>

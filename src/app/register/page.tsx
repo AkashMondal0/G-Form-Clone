@@ -49,8 +49,8 @@ export default function Register() {
                     status: null,
                     error: false
                 }
-                CreateUser(newUser,uid)
-                // setLocal(newUser)
+                CreateUser(newUser, uid)
+                setLocal(uid)
                 router.push("/");
             })
             .catch((error) => {

@@ -2,6 +2,7 @@
 import React, { useEffect, useReducer } from 'react'
 import MainContext from './mainContext'
 import { MainReducer, getLocal, initialState } from './mainReducer'
+import { GetUserDetails } from '@/app/form'
 
 
 interface MainStateProps {
@@ -13,18 +14,20 @@ const MainState: React.FC<MainStateProps> = ({
 }) => {
     const [state, dispatch] = useReducer(MainReducer, initialState)
 
-    useEffect(() => {
+    const getUser = async () => {
         if (typeof window !== "undefined") {
-            const localData = getLocal()
-            if (localData) {
-                dispatch({
-                    type: 'START',
-                    payload: getLocal()
-                })
-            }
+            const LocalToken = getLocal()
+            const localData = await GetUserDetails(LocalToken)
+            dispatch({
+                type: 'START',
+                payload: localData
+            })
         }
+    }
+    useEffect(() => {
+     getUser()
     }, [])
-    // console.log(state.data)
+
     return (
         <MainContext.Provider value={{
             state,

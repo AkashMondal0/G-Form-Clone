@@ -1,45 +1,46 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Card, Menu,
     MenuHandler,
     MenuList,
     MenuItem, Typography,
 } from '@/app/material'
-import { MainStateProvider, question } from '@/interfaces/interfaces'
+import { DummyForm, FormPage, MainStateProvider } from '@/interfaces/interfaces'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { GoTrash } from 'react-icons/go'
 import { BiText } from 'react-icons/bi'
 import { RiShareBoxLine } from 'react-icons/ri'
 import { useRouter } from 'next/navigation'
+import { ReadForm } from '@/app/form'
 
 interface FormCardProps {
     id: string,
-    userName?: string,
-    userId?: string,
-    date?: Date,
-    questions?: question[]
-    title: string,
     MainState?: MainStateProvider,
 }
 
 const FormCard: React.FC<FormCardProps> = ({
     id,
-    userName,
-    userId,
-    date,
-    questions,
-    title,
     MainState
 }) => {
     const router = useRouter()
 
+    const [form, setForm] = useState<FormPage>({ ...DummyForm, id: `${id}` })
+
+    const findForm = async () => {
+        const data = await ReadForm(id) as FormPage
+        setForm(data)
+    }
+
+    useEffect(() => {
+        if (id) {
+            findForm()
+        }
+    }, [])
+
     const remove_form = () => {
-        MainState?.dispatch({
-            type: 'Remove_Form',
-            payload: id
-        })
+        MainState?.dispatch({ type: 'Remove_Form', payload: id })
     }
     const EditFormHandle = (id: string) => {
         router.push(`/forms/edit/?id=${id}`)
@@ -61,7 +62,7 @@ const FormCard: React.FC<FormCardProps> = ({
                     {/* title header */}
                     <div className='m-3'>
                         <Typography variant="lead" color="gray" className="mt-3 font-normal text-ellipsis overflow-hidden">
-                            {title}
+                            {form.title || "Loading...."}
                         </Typography>
                     </div>
                     {/* date and edit footer */}

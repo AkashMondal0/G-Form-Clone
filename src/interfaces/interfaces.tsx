@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+
 export interface Author {
   name: string,
   email: string,
@@ -8,7 +9,7 @@ export interface Author {
 export interface MainState {
   Author: Author | null,
   token: string | null,
-  data: FormPage[] | [],
+  data: string[],
   isLogged: boolean,
   loading: boolean,
   status: number | null,

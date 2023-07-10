@@ -17,7 +17,6 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
     updateQuestion,
 }) => {
 
-    const [optionsList, setOptionsList] = useState<option[]>(options);
     const [option, setOption] = useState<option>({
         id: uuidv4(),
         value: "",
@@ -34,7 +33,7 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
 
     const [question, setQuestion] = useState<question>({
         title: title,
-        options: optionsList,
+        options: [],
         answer: answer,
         required: required,
         id: id,
@@ -43,35 +42,39 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
 
     // for option add
     const addQuestion_Option = useCallback(() => {
-        setOptionsList([...optionsList, option])
+        const newOption = [...question.options, option]
+        setQuestion({
+            ...question,
+            options: newOption
+        })
         setOption({
             id: uuidv4(),
             value: "",
             responsesCount: 0,
             responsesUserId: []
         })
-    }, [optionsList, option])
+    }, [option])
 
     const removeQuestion_Option = useCallback((id: string) => {
-        const newData = optionsList.filter((item) => item.id !== id)
-        setOptionsList(newData)
+        const newData = question.options.filter((item) => item.id !== id)
         setQuestion({
             ...question,
             options: newData
         })
-    }, [optionsList, question])
+        submitQuestion()
+    }, [question])
 
     // for option update
     const onInputIn = useCallback((id: string) => {
-        const findOption = optionsList.find((item) => item.id === id)!
+        const findOption = question.options.find((item) => item.id === id)!
         setOptionUpdate({
             id: findOption.id,
             value: findOption.value
         })
-    }, [optionsList])
+    }, [])
 
     const onInputOutUpdate = useCallback((id: string) => {
-        const newData = optionsList.map((item) => {
+        const newData = question.options.map((item) => {
             if (item.id === id) {
                 return {
                     ...item,
@@ -80,24 +83,24 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
             }
             return item
         })
-        setOptionsList(newData)
         setQuestion({
             ...question,
             options: newData
         })
-    }, [optionsList, question, optionUpdate])
+    }, [question, optionUpdate])
 
     const submitQuestion = useCallback(() => {
         const data: question = {
             id: id,
             title: question.title,
-            options: optionsList,
+            options: question.options,
             answer: question.answer,
             required: question.required,
             responses: question.responses
         }
         updateQuestion(data)
-    }, [id, optionsList, question, updateQuestion])
+        // console.log(data)
+    }, [id, question, updateQuestion])
 
     useEffect(() => {
         setQuestion({
@@ -108,12 +111,12 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
             id: id,
             responses: responses
         })
-        setOptionsList(options)
     }, [id])
 
     return (
         <Card>
-            <div className='p-6'>
+            <div className='p-6'
+                onBlur={submitQuestion} >
                 <div className='h-2 w-full flex justify-end'>
                     {question.required && <span className="text-red-500 mr-1 text-2xl text-end">*</span>}
                 </div>
@@ -121,8 +124,6 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
                 <div className='my-10 flex gap-4'>
                     <h1 className='my-4 text-lg font-semibold'>{index + 1})</h1>
                     <Input
-                        name='title'
-                        multiple
                         onChange={(e) => {
                             setQuestion({
                                 ...question,
@@ -135,14 +136,13 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
                     />
                 </div>
                 {/* /Option // */}
-                {optionsList.map((item, index) => {
+                {question.options.map((item, index) => {
                     return (
                         <div className="flex items-center my-4" key={index}>
                             <label htmlFor={item.id} className="px-3 py-2 flex items-center w-full cursor-pointer">
                                 <ListItemPrefix className="mr-3">
                                     <Radio
                                         defaultChecked={answer.id === item.id}
-                                        // checked={answer.id === item.id || false} // TODO: fix this
                                         name={question.id}
                                         id={item.id}
                                         ripple={true}
@@ -209,7 +209,7 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
                                     })
                                 }}
                                 value={option.value}
-                                variant="standard" label={`Add Option ${optionsList.length + 1}`} />
+                                variant="standard" label={`Add Option ${question.options.length + 1}`} />
                         </div>
                         <div className='cursor-pointer'>
                             <HiPlus onClick={addQuestion_Option} size={30} />
@@ -235,7 +235,7 @@ const QuestionShowCard: React.FC<QuestionFormCardProps> = ({
                         </Button>
                     </div>
 
-                    <Button color='green' onClick={submitQuestion}>Update</Button>
+                    {/* <Button color='red' onClick={submitQuestion}>Update</Button> */}
                 </div>
             </div>
         </Card>

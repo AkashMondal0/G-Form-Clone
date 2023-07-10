@@ -14,7 +14,7 @@ const Navbar: React.FC<NavBarProps> = ({
             {/* navbar  logo*/}
             <div className='flex items-center gap-3'>
                 <Avatar onClick={()=>{
-                    router.push('/')
+                    router.push('/forms/')
                 }} src="https://www.gstatic.com/images/branding/product/1x/forms_2020q4_48dp.png" alt="avatar" variant="rounded" />
                 <div className='text-gray-600 text-2xl'>
                     {title}

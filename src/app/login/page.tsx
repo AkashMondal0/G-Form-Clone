@@ -43,7 +43,7 @@ export default function Login() {
                     status: null,
                     error: false
                 }
-                setLocal(newUser)
+                setLocal(uid)
                 router.push("/");
             })
             .catch((error) => {

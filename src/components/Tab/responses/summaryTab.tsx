@@ -1,5 +1,5 @@
 import Chart from '@/components/Chart/Chart'
-import { FormPage } from '@/interfaces/interfaces'
+import { DummyForm, FormPage } from '@/interfaces/interfaces'
 import React from 'react'
 
 interface SummaryTabProp {
@@ -8,7 +8,7 @@ interface SummaryTabProp {
 const SummaryTab: React.FC<SummaryTabProp> = ({
     Form
 }) => {
-    const { questions } = Form 
+    const { questions } = Form || DummyForm
     
     return <React.Fragment>
         {questions.map((question, index) => <Chart key={question.id} question={question} />)}

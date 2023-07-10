@@ -7,6 +7,7 @@ import TitleBlock from './TitleBlock';
 import { FormPage, MainStateProvider, question } from '@/interfaces/interfaces';
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/navigation';
+import { UpdateForm } from '@/app/form';
 // import { BsPlusCircle } from 'react-icons/bs';
 
 interface EditPage {
@@ -15,6 +16,7 @@ interface EditPage {
 const EditPage: React.FC<EditPage> = ({
     Form
 }) => {
+
     const Router = useRouter()
     const MainState = useContext<MainStateProvider>(MainContext)
     const [QuestionList, setQuestionList] = useState<question[]>([])
@@ -52,17 +54,19 @@ const EditPage: React.FC<EditPage> = ({
 
 
     useEffect(() => {
-        setQuestionList(Form.questions)
-        setForm({
-            id: Form.id,
-            title: Form.title,
-            description: Form.description,
-            questions: Form.questions,
-            userId: Form.userId,
-            userName: Form.userName,
-            date: Form.date,
-            userResponse: Form.userResponse
-        })
+        if (Form) {
+            setQuestionList(Form.questions)
+            setForm({
+                id: Form.id,
+                title: Form.title,
+                description: Form.description,
+                questions: Form.questions,
+                userId: Form.userId,
+                userName: Form.userName,
+                date: Form.date,
+                userResponse: Form.userResponse
+            })
+        }
     }, [Form])
 
     // for question save 
@@ -70,11 +74,8 @@ const EditPage: React.FC<EditPage> = ({
         const newForm = {
             ...form,
             questions: QuestionList
-        }
-        MainState.dispatch({
-            type: 'Update_Form',
-            payload: newForm
-        })
+        }      
+        UpdateForm(newForm)       
         Router.push('/')
     }
 
@@ -82,7 +83,6 @@ const EditPage: React.FC<EditPage> = ({
         Router.push(`/forms/viewForm?id=${form.id}`)
     }
 
-    // console.log(Form)
     return (
         <div className='mx-auto min-h-[100vh]'>
             <TitleBlock Value={form} onChangeValue={setForm} />
@@ -98,7 +98,7 @@ const EditPage: React.FC<EditPage> = ({
                             required={item.required}
                             id={item.id}
                             updateQuestion={updateQuestion}
-                            removeQuestion={removeQuestion} 
+                            removeQuestion={removeQuestion}
                             responses={item.responses} />
                     </div>
                 )
