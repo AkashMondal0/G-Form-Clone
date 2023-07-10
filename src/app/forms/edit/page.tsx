@@ -10,13 +10,14 @@ import Navbar from '@/components/Navbar/Navbar'
 import MainState from '@/context/mainState'
 import { useSearchParams } from 'next/navigation'
 import { ReadForm } from '@/app/form'
-import useLoading from '@/hook/Loading'
+import { editPageLoading } from '@/hook/Loading'
+import { getLocal } from '@/context/mainReducer'
 
 const FromCrud: React.FC = () => {
   const searchParams = useSearchParams()
   const formId = searchParams.get('id') || ""
   const [form, setForm] = useState<FormPage>({ ...DummyForm, id: `${formId}` })
-  const Loading = useLoading()
+  const Loading = editPageLoading()
 
   const FormTabs: TabProps[] = [
     {
@@ -40,8 +41,12 @@ const FromCrud: React.FC = () => {
 
   const findForm = async () => {
     const data = await ReadForm(formId) as FormPage
-    setForm(data)
-    Loading.stopLoading()
+    if (data.userId === getLocal()) {
+      setForm(data)
+      Loading.stopLoading()
+    } else {
+
+    }
   }
 
   useEffect(() => {
@@ -49,8 +54,12 @@ const FromCrud: React.FC = () => {
     if (formId) {
       findForm()
     }
-    // console.log(Loading.isLoading)
   }, [])
+
+  if (Loading.isLoading) {
+    return <div>you are not the owner of this form</div>
+  }
+
   return (
     <Fragment>
       <MainState>
@@ -61,7 +70,6 @@ const FromCrud: React.FC = () => {
           FormData={FormTabs}
           TabHeaderCss={'w-60'} />
       </MainState>
-
     </Fragment>
   )
 }

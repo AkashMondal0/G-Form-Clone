@@ -62,7 +62,7 @@ const FormCard: React.FC<FormCardProps> = ({
                     {/* title header */}
                     <div className='m-3'>
                         <Typography variant="lead" color="gray" className="mt-3 font-normal text-ellipsis overflow-hidden">
-                            {form.title || "Loading...."}
+                            {form?.title || "Loading...."}
                         </Typography>
                     </div>
                     {/* date and edit footer */}

@@ -13,6 +13,7 @@ import Navbar from '../Navbar/Navbar'
 import { v4 as uuidv4 } from 'uuid';
 import MainContext from '@/context/mainContext'
 import { useRouter } from 'next/navigation'
+import { getLocal } from '@/context/mainReducer'
 
 interface ViewFormProps {
     form: FormPage
@@ -29,11 +30,10 @@ const ViewForm: React.FC<ViewFormProps> = ({
     const { title, description, questions, id } = form || DummyForm
     const [userAnswer, setUserAnswer] = useState<userResponse>({
         id: uuidv4(),
-        userId: MainState.state.Author?.uid || "*",
+        userId: "",
         formId: id,
         userAnswers: [],
     })
-
 
     const sendAnswer = (data: sendAnswer) => {
         const { questionId, userOption, userId }: sendAnswer = data
@@ -59,9 +59,13 @@ const ViewForm: React.FC<ViewFormProps> = ({
     }
 
     const handleSubmit = () => {
+        const userResponse = {
+            ...userAnswer,
+            userId: MainState.state.Author?.uid
+        }
         MainState.dispatch({
             type: "VIEW_SUBMIT_FORM",
-            payload: {userAnswer,form}
+            payload: { userResponse, form }
         })
         router.push("/forms/")
     }

@@ -55,7 +55,7 @@ export const MainReducer = (state: MainState, action: action): MainState => {
 
         // unique type logic
         case 'VIEW_SUBMIT_FORM':
-            const Data_From_User: userResponse = action.payload.userAnswer
+            const Data_From_User: userResponse = action.payload.userResponse
             const submitForm: FormPage = action.payload.form
 
             if (submitForm) {
