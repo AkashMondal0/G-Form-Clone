@@ -79,9 +79,6 @@ const EditPage: React.FC<EditPage> = ({
         Router.push('/')
     }
 
-    const handleLink = () => {
-        Router.push(`/forms/viewForm?id=${form.id}`)
-    }
 
     return (
         <div className='mx-auto min-h-[100vh]'>
@@ -110,12 +107,7 @@ const EditPage: React.FC<EditPage> = ({
             </div>
             <div className='my-4'>
                 <Button onClick={handleSubmit}>
-                    Submit
-                </Button>
-            </div>
-            <div className='my-4'>
-                <Button color='green' onClick={handleLink}>
-                    Link
+                    Save Form
                 </Button>
             </div>
         </div>

@@ -8,17 +8,21 @@ import Setting from '@/components/Tab/Setting'
 import EditPage from '@/components/EditForm/EditPage'
 import Navbar from '@/components/Navbar/Navbar'
 import MainState from '@/context/mainState'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { ReadForm } from '@/app/form'
 import { editPageLoading } from '@/hook/Loading'
 import { getLocal } from '@/context/mainReducer'
+import { Button } from '@/app/material'
 
 const FromCrud: React.FC = () => {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const formId = searchParams.get('id') || ""
   const [form, setForm] = useState<FormPage>({ ...DummyForm, id: `${formId}` })
   const Loading = editPageLoading()
-
+  const handleLink = () => {
+    router.push(`/forms/viewForm?id=${form.id}`)
+  }
   const FormTabs: TabProps[] = [
     {
       label: "Questions",
@@ -43,7 +47,9 @@ const FromCrud: React.FC = () => {
     const data = await ReadForm(formId) as FormPage
     if (data.userId === getLocal()) {
       setForm(data)
-      Loading.stopLoading()
+      setTimeout(() => {
+        Loading.stopLoading()
+      }, 1000);
     } else {
 
     }
@@ -56,19 +62,27 @@ const FromCrud: React.FC = () => {
     }
   }, [])
 
-  if (Loading.isLoading) {
-    return <div>you are not the owner of this form</div>
-  }
+  const Right = (
+    <div className="flex items-center w-full justify-end pr-5">
+      <Button onClick={handleLink}>
+        send
+      </Button>
+    </div >)
 
   return (
     <Fragment>
       <MainState>
-        <Navbar title={form?.title || ""} />
-        <TabCom
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          FormData={FormTabs}
-          TabHeaderCss={'w-60'} />
+        <Navbar title={form?.title || ""} right={Right} />
+        {Loading.isLoading ?
+          <div className='bg-gray-200 min-h-screen'>you are not the owner of this form</div> :
+          <>
+            <TabCom
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              FormData={FormTabs}
+              TabHeaderCss={'w-60'} />
+          </>
+        }
       </MainState>
     </Fragment>
   )

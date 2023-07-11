@@ -29,6 +29,9 @@ export const MainReducer = (state: MainState, action: action): MainState => {
     switch (action.type) {
         case 'START':
             return state = action.payload
+        case "LOGOUT":
+            localStorage.removeItem('GoForm-uid')
+            return state = initialState
 
         case 'Create_Form':
             const data = [...state.data, action.payload.id]
@@ -41,7 +44,7 @@ export const MainReducer = (state: MainState, action: action): MainState => {
 
         case 'Update_Form':
             const Update_Form_newForm = action.payload
-            UpdateForm(Update_Form_newForm)          
+            UpdateForm(Update_Form_newForm)
             return state
 
         case 'Remove_Form':
@@ -89,29 +92,6 @@ export const MainReducer = (state: MainState, action: action): MainState => {
             }
             UpdateForm(submitForm)
             return state
-        case 'REGISTER':
-            // const { displayName, email, photoURL, uid } = action.payload
-            console.log("displayName, email, photoURL, uid")
-            // const Register_newData = {
-            //     ...state,
-            //     Author: action.payload,
-            // }
-            // localStorage.setItem('GoForm-uid', JSON.stringify(Register_newData))
-            return state
-
-        case 'LOGOUT':
-            const Logout_newData = {
-                ...state,
-            }
-            localStorage.setItem('GoForm-uid', JSON.stringify(Logout_newData))
-            return Logout_newData
-
-        case 'LOGIN':
-            const Login_newData = {
-                ...state,
-            }
-            localStorage.setItem('GoForm-uid', JSON.stringify(Login_newData))
-            return Login_newData
 
         default:
             return state

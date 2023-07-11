@@ -7,7 +7,7 @@ const GetUserDetails = async (uid: string) => {
     try {
         const docSnap = await getDoc(doc(db, 'users', uid)).then((doc) => {
             if (doc.exists()) {
-                return doc.data() as MainState;
+                return doc.data()
             } else {
                 return false;
             }
@@ -39,7 +39,7 @@ const updateUserFirebase = async (User: MainState) => {
 const getDatabase = async (uid: string) => {
     const docSnap = await getDoc(doc(db, 'users', uid)).then((doc) => {
         if (doc.exists()) {
-            return doc.data() as MainState;
+            return doc.data() 
         } else {
             return null;
         }
@@ -59,7 +59,7 @@ const CreateForm = async (newForm: FormPage) => {
 const ReadForm = async (FormId: string) => {
     const docSnap = await getDoc(doc(db, 'forms', FormId)).then((doc) => {
         if (doc.exists()) {
-            return doc.data() as FormPage;
+            return doc.data()
         } else {
             return null;
         }

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 'use client'
 import React, { useEffect, useState } from 'react'
@@ -14,7 +15,7 @@ import { BiText } from 'react-icons/bi'
 import { RiShareBoxLine } from 'react-icons/ri'
 import { useRouter } from 'next/navigation'
 import { ReadForm } from '@/app/form'
-
+import dateFormat, { masks } from "dateformat";
 interface FormCardProps {
     id: string,
     MainState?: MainStateProvider,
@@ -37,7 +38,7 @@ const FormCard: React.FC<FormCardProps> = ({
         if (id) {
             findForm()
         }
-    }, [])
+    }, [id])
 
     const remove_form = () => {
         MainState?.dispatch({ type: 'Remove_Form', payload: id })
@@ -67,7 +68,7 @@ const FormCard: React.FC<FormCardProps> = ({
                     </div>
                     {/* date and edit footer */}
                     <div className="flex items-center justify-between gap-3 m-3">
-                        <Typography className="font-normal text-sm">Opened January 10 2023</Typography>
+                        <Typography className="font-normal text-sm">Created {dateFormat(Date(`${form.date}`), " mmmm d, yyyy")}</Typography>
                         <MenuHandler>
                             <button className=' hover:bg-gray-200 w-8 h-8 rounded-full flex justify-center items-center'>
                                 <BsThreeDotsVertical size={20} />
