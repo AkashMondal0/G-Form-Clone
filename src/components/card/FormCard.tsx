@@ -68,7 +68,7 @@ const FormCard: React.FC<FormCardProps> = ({
                     </div>
                     {/* date and edit footer */}
                     <div className="flex items-center justify-between gap-3 m-3">
-                        <Typography className="font-normal text-sm">Created {dateFormat(Date(`${form.date}`), " mmmm d, yyyy")}</Typography>
+                        <Typography className="font-normal text-sm">Created {dateFormat(new Date(`${form.date}` as string), " mmmm d, yyyy")}</Typography>
                         <MenuHandler>
                             <button className=' hover:bg-gray-200 w-8 h-8 rounded-full flex justify-center items-center'>
                                 <BsThreeDotsVertical size={20} />

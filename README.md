@@ -6,7 +6,7 @@
 Description for a Next.js Quiz App using TypeScript, Firebase, Tailwind CSS, and GitHub:
 
 
-- [Live Project](https://gentle-plant-039508b0f.3.azurestaticapps.net/)
+- [Live Project]()
 
 ## Contents
 

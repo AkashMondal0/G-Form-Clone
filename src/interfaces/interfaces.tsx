@@ -39,6 +39,8 @@ export interface userAnswers {
   userId: string,
 }
 export interface userResponse {
+  userName: string;
+  userEmail: string;
   id: string,
   formId: string,
   userId: string,

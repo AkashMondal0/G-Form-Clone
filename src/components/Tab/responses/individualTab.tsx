@@ -24,9 +24,8 @@ const IndividualTab: React.FC<IndividualTabProp> = ({
         return data.id
     }
 
-
     return <React.Fragment>
-        <div> User Id - {userResponse[index]?.userId || ""}</div>
+        <div> User - {userResponse[index]?.userEmail || ""}</div>
         <Card className='p-4 my-4'>
             <div className='flex justify-between'>
                 <div className='flex justify-between'>

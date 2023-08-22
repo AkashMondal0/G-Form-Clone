@@ -9,7 +9,7 @@ import {
     userAnswers,
     userResponse
 } from '@/interfaces/interfaces'
-import Navbar from '../Navbar/Navbar'
+import Navbar from '../Navbar'
 import { v4 as uuidv4 } from 'uuid';
 import MainContext from '@/context/mainContext'
 import { useRouter } from 'next/navigation'
@@ -33,6 +33,8 @@ const ViewForm: React.FC<ViewFormProps> = ({
         userId: "",
         formId: id,
         userAnswers: [],
+        userName: "",
+        userEmail: "",
     })
 
     const sendAnswer = (data: sendAnswer) => {
@@ -61,7 +63,9 @@ const ViewForm: React.FC<ViewFormProps> = ({
     const handleSubmit = () => {
         const userResponse = {
             ...userAnswer,
-            userId: MainState.state.Author?.uid
+            userId: MainState.state.Author?.uid,
+            userName: MainState.state.Author?.name,
+            userEmail: MainState.state.Author?.email,
         }
         MainState.dispatch({
             type: "VIEW_SUBMIT_FORM",

@@ -1,33 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
+    // output: 'standalone',
     output: 'export',
-    compiler: {
-        // see https://styled-components.com/docs/tooling#babel-plugin for more info on the options.
-        styledComponents: {
-            // Enabled by default in development, disabled in production to reduce file size,
-            // setting this will override the default for all environments.
-            displayName: true,
-            // Enabled by default.
-            ssr: true,
-            // Enabled by default.
-            fileName: true,
-            // Empty by default.
-            topLevelImportPaths: [],
-            // Defaults to ["index"].
-            meaninglessFileNames: [],
-            // Enabled by default.
-            cssProp: true,
-            // Empty by default.
-            namespace: "",
-            // Not supported yet.
-            minify: false,
-            // Not supported yet.
-            transpileTemplateLiterals: false,
-            // Not supported yet.
-            pure: true,
-        },
+    experimental: {
+      appDir: true,
     },
-}
-
-module.exports = nextConfig
+    images: {
+      unoptimized: true,
+    },
+    env: {
+      APIKEY: process.env.APIKEY,
+      AUTHDOMAIN: process.env.AUTHDOMAIN,
+      PROJECTID: process.env.PROJECTID,
+      STORAGEBUCKET: process.env.STORAGEBUCKET,
+      MESSAGINGSENDERID: process.env.MESSAGINGSENDERID,
+      APPID: process.env.APPID,
+    }
+  }
+  
+  module.exports = nextConfig
